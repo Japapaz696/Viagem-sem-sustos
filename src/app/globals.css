@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --bg: #F8F9FB;
+  --surface: #FFFFFF;
+  --surface-elevated: #FFFFFF;
+  --fg: #0F172A;
+  --muted: #64748B;
+  --accent: #2563EB;
+  --accent-soft: rgba(37,99,235,0.08);
+  --border: #E2E8F0;
+  --border-strong: #CBD5E1;
+  --success: #16A34A;
+  --danger: #DC2626;
+  --warning: #D97706;
+}
+
+.dark {
+  --bg: #0B0F17;
+  --surface: #111827;
+  --surface-elevated: #1F2937;
+  --fg: #F1F5F9;
+  --muted: #94A3B8;
+  --accent: #60A5FA;
+  --accent-soft: rgba(96,165,250,0.12);
+  --border: rgba(255,255,255,0.08);
+  --border-strong: rgba(255,255,255,0.15);
+  --success: #4ADE80;
+  --danger: #F87171;
+  --warning: #FB923C;
+}
+
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { background: var(--bg); color: var(--fg); font-family: 'Inter', system-ui, sans-serif; }
+::selection { background: var(--accent-soft); color: inherit; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }

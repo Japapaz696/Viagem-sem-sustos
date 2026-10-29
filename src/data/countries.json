@@ -1,0 +1,520 @@
+[
+  {
+    "id": "br",
+    "slug": "brasil",
+    "name": "Brasil",
+    "keywords": [
+      "brasil",
+      "brazil",
+      "sao paulo",
+      "rio"
+    ],
+    "flag": "🇧🇷",
+    "visa": {
+      "type": "exempt",
+      "label": "País de origem",
+      "description": "Você já está no Brasil — nenhum visto necessário para permanecer no país.",
+      "badgeColor": "bg-emerald-100 text-emerald-700"
+    },
+    "passport": {
+      "minValidityMonths": 0,
+      "details": "Documento de identidade válido é suficiente para cidadãos brasileiros."
+    },
+    "vaccines": {
+      "required": [],
+      "recommended": [
+        "Febre amarela (regiões endêmicas)",
+        "COVID-19"
+      ]
+    },
+    "maxStayDays": 0,
+    "officialUrl": "https://www.gov.br",
+    "lastUpdated": "2026-10-28"
+  },
+  {
+    "id": "us",
+    "slug": "estados-unidos",
+    "name": "Estados Unidos",
+    "keywords": [
+      "usa",
+      "estados unidos",
+      "eua",
+      "america"
+    ],
+    "flag": "🇺🇸",
+    "visa": {
+      "type": "required",
+      "label": "Visto necessário",
+      "description": "Brasileiros precisam de visto de turismo (B1/B2) ou visto eletrônico ESTA quando elegíveis.",
+      "badgeColor": "bg-red-100 text-red-700"
+    },
+    "passport": {
+      "minValidityMonths": 6,
+      "details": "Passaporte válido por pelo menos 6 meses além da data de retorno."
+    },
+    "vaccines": {
+      "required": [],
+      "recommended": [
+        "Febre amarela",
+        "COVID-19",
+        "Influenza"
+      ]
+    },
+    "maxStayDays": 180,
+    "officialUrl": "https://travel.state.gov",
+    "lastUpdated": "2026-10-28"
+  },
+  {
+    "id": "pt",
+    "slug": "portugal",
+    "name": "Portugal",
+    "keywords": [
+      "portugal",
+      "europa",
+      "schengen"
+    ],
+    "flag": "🇵🇹",
+    "visa": {
+      "type": "exempt",
+      "label": "Isento de visto",
+      "description": "Brasileiros podem entrar sem visto por até 90 dias em período de 180 dias (Schengen).",
+      "badgeColor": "bg-green-100 text-green-700"
+    },
+    "passport": {
+      "minValidityMonths": 3,
+      "details": "Passaporte válido por pelo menos 3 meses após a data de saída do espaço Schengen."
+    },
+    "vaccines": {
+      "required": [],
+      "recommended": [
+        "COVID-19",
+        "Influenza"
+      ]
+    },
+    "maxStayDays": 90,
+    "officialUrl": "https://vistos.mne.gov.pt",
+    "lastUpdated": "2026-10-28"
+  },
+  {
+    "id": "ar",
+    "slug": "argentina",
+    "name": "Argentina",
+    "keywords": [
+      "argentina",
+      "buenos aires",
+      "mercosul"
+    ],
+    "flag": "🇦🇷",
+    "visa": {
+      "type": "exempt",
+      "label": "Isento de visto",
+      "description": "Brasileiros entram com RG ou passaporte, sem visto, por até 90 dias.",
+      "badgeColor": "bg-green-100 text-green-700"
+    },
+    "passport": {
+      "minValidityMonths": 0,
+      "details": "Pode entrar com RG válido; passaporte não é obrigatório."
+    },
+    "vaccines": {
+      "required": [],
+      "recommended": [
+        "Febre amarela (regiões de fronteira)",
+        "COVID-19"
+      ]
+    },
+    "maxStayDays": 90,
+    "officialUrl": "https://www.cancilleria.gob.ar",
+    "lastUpdated": "2026-10-28"
+  },
+  {
+    "id": "es",
+    "slug": "espanha",
+    "name": "Espanha",
+    "keywords": [
+      "espanha",
+      "spain",
+      "europa",
+      "schengen"
+    ],
+    "flag": "🇪🇸",
+    "visa": {
+      "type": "exempt",
+      "label": "Isento de visto",
+      "description": "Brasileiros isentos de visto por até 90 dias em período de 180 dias (Schengen).",
+      "badgeColor": "bg-green-100 text-green-700"
+    },
+    "passport": {
+      "minValidityMonths": 3,
+      "details": "Passaporte válido por pelo menos 3 meses após a data de saída do espaço Schengen."
+    },
+    "vaccines": {
+      "required": [],
+      "recommended": [
+        "COVID-19",
+        "Influenza"
+      ]
+    },
+    "maxStayDays": 90,
+    "officialUrl": "https://www.exteriores.gob.es",
+    "lastUpdated": "2026-10-28"
+  },
+  {
+    "id": "jp",
+    "slug": "japao",
+    "name": "Japão",
+    "keywords": [
+      "japao",
+      "japan",
+      "tokyo",
+      "asia"
+    ],
+    "flag": "🇯🇵",
+    "visa": {
+      "type": "exempt",
+      "label": "Isento de visto",
+      "description": "Brasileiros isentos de visto de curta duração (até 90 dias) para turismo.",
+      "badgeColor": "bg-green-100 text-green-700"
+    },
+    "passport": {
+      "minValidityMonths": 0,
+      "details": "Passaporte válido durante toda a estadia."
+    },
+    "vaccines": {
+      "required": [],
+      "recommended": [
+        "COVID-19",
+        "Influenza",
+        "Hepatite A"
+      ]
+    },
+    "maxStayDays": 90,
+    "officialUrl": "https://www.mofa.go.jp",
+    "lastUpdated": "2026-10-28"
+  },
+  {
+    "id": "fr",
+    "slug": "franca",
+    "name": "França",
+    "keywords": [
+      "franca",
+      "france",
+      "paris",
+      "europa",
+      "schengen"
+    ],
+    "flag": "🇫🇷",
+    "visa": {
+      "type": "exempt",
+      "label": "Isento de visto",
+      "description": "Brasileiros isentos de visto por até 90 dias em período de 180 dias (Schengen).",
+      "badgeColor": "bg-green-100 text-green-700"
+    },
+    "passport": {
+      "minValidityMonths": 3,
+      "details": "Passaporte válido por pelo menos 3 meses após a data de saída do espaço Schengen."
+    },
+    "vaccines": {
+      "required": [],
+      "recommended": [
+        "COVID-19",
+        "Influenza"
+      ]
+    },
+    "maxStayDays": 90,
+    "officialUrl": "https://france-visas.gouv.fr",
+    "lastUpdated": "2026-10-28"
+  },
+  {
+    "id": "cl",
+    "slug": "chile",
+    "name": "Chile",
+    "keywords": [
+      "chile",
+      "santiago",
+      "mercosul"
+    ],
+    "flag": "🇨🇱",
+    "visa": {
+      "type": "exempt",
+      "label": "Isento de visto",
+      "description": "Brasileiros entram sem visto, apenas com RG ou passaporte, por até 90 dias.",
+      "badgeColor": "bg-green-100 text-green-700"
+    },
+    "passport": {
+      "minValidityMonths": 0,
+      "details": "Pode entrar com RG válido; passaporte não é obrigatório."
+    },
+    "vaccines": {
+      "required": [],
+      "recommended": [
+        "COVID-19",
+        "Influenza"
+      ]
+    },
+    "maxStayDays": 90,
+    "officialUrl": "https://www.consuex.cl",
+    "lastUpdated": "2026-10-28"
+  },
+  {
+    "id": "mx",
+    "slug": "mexico",
+    "name": "México",
+    "keywords": [
+      "mexico",
+      "cancun",
+      "cidade do mexico"
+    ],
+    "flag": "🇲🇽",
+    "visa": {
+      "type": "exempt",
+      "label": "Isento de visto",
+      "description": "Brasileiros isentos de visto para turismo; preenchem FMM na chegada.",
+      "badgeColor": "bg-green-100 text-green-700"
+    },
+    "passport": {
+      "minValidityMonths": 6,
+      "details": "Passaporte válido por pelo menos 6 meses."
+    },
+    "vaccines": {
+      "required": [],
+      "recommended": [
+        "Hepatite A",
+        "Febre tifoide",
+        "COVID-19"
+      ]
+    },
+    "maxStayDays": 180,
+    "officialUrl": "https://www.gob.mx/sre",
+    "lastUpdated": "2026-10-28"
+  },
+  {
+    "id": "it",
+    "slug": "italia",
+    "name": "Itália",
+    "keywords": [
+      "italia",
+      "italy",
+      "roma",
+      "europa",
+      "schengen"
+    ],
+    "flag": "🇮🇹",
+    "visa": {
+      "type": "exempt",
+      "label": "Isento de visto",
+      "description": "Brasileiros isentos de visto por até 90 dias em período de 180 dias (Schengen).",
+      "badgeColor": "bg-green-100 text-green-700"
+    },
+    "passport": {
+      "minValidityMonths": 3,
+      "details": "Passaporte válido por pelo menos 3 meses após a data de saída do espaço Schengen."
+    },
+    "vaccines": {
+      "required": [],
+      "recommended": [
+        "COVID-19",
+        "Influenza"
+      ]
+    },
+    "maxStayDays": 90,
+    "officialUrl": "https://vistoperitalia.esteri.it",
+    "lastUpdated": "2026-10-28"
+  },
+  {
+    "id": "th",
+    "slug": "tailandia",
+    "name": "Tailândia",
+    "keywords": [
+      "tailandia",
+      "thailand",
+      "bangkok",
+      "asia"
+    ],
+    "flag": "🇹🇭",
+    "visa": {
+      "type": "exempt",
+      "label": "Isento de visto",
+      "description": "Brasileiros isentos de visto por até 90 dias para turismo.",
+      "badgeColor": "bg-green-100 text-green-700"
+    },
+    "passport": {
+      "minValidityMonths": 6,
+      "details": "Passaporte válido por pelo menos 6 meses."
+    },
+    "vaccines": {
+      "required": [],
+      "recommended": [
+        "Hepatite A",
+        "Febre tifoide",
+        "Encefalite japonesa",
+        "COVID-19"
+      ]
+    },
+    "maxStayDays": 90,
+    "officialUrl": "https://www.thaiembassy.org",
+    "lastUpdated": "2026-10-28"
+  },
+  {
+    "id": "ca",
+    "slug": "canada",
+    "name": "Canadá",
+    "keywords": [
+      "canada",
+      "toronto",
+      "vancouver"
+    ],
+    "flag": "🇨🇦",
+    "visa": {
+      "type": "required",
+      "label": "Visto/Autorização necessária",
+      "description": "Brasileiros precisam de visto de visitante ou eTA, conforme elegibilidade.",
+      "badgeColor": "bg-red-100 text-red-700"
+    },
+    "passport": {
+      "minValidityMonths": 0,
+      "details": "Passaporte válido durante toda a estadia."
+    },
+    "vaccines": {
+      "required": [],
+      "recommended": [
+        "COVID-19",
+        "Influenza"
+      ]
+    },
+    "maxStayDays": 180,
+    "officialUrl": "https://www.canada.ca/en/immigration-refugees-citizenship.html",
+    "lastUpdated": "2026-10-28"
+  },
+  {
+    "id": "gb",
+    "slug": "inglaterra",
+    "name": "Inglaterra",
+    "keywords": [
+      "inglaterra",
+      "reino unido",
+      "uk",
+      "londres",
+      "europa"
+    ],
+    "flag": "🇬🇧",
+    "visa": {
+      "type": "required",
+      "label": "Visto necessário",
+      "description": "Brasileiros precisam de visto de visitante (Standard Visitor visa) para o Reino Unido.",
+      "badgeColor": "bg-red-100 text-red-700"
+    },
+    "passport": {
+      "minValidityMonths": 0,
+      "details": "Passaporte válido durante toda a estadia."
+    },
+    "vaccines": {
+      "required": [],
+      "recommended": [
+        "COVID-19",
+        "Influenza"
+      ]
+    },
+    "maxStayDays": 180,
+    "officialUrl": "https://www.gov.uk/standard-visitor-visa",
+    "lastUpdated": "2026-10-28"
+  },
+  {
+    "id": "co",
+    "slug": "colombia",
+    "name": "Colômbia",
+    "keywords": [
+      "colombia",
+      "bogota",
+      "cartagena",
+      "mercosul"
+    ],
+    "flag": "🇨🇴",
+    "visa": {
+      "type": "exempt",
+      "label": "Isento de visto",
+      "description": "Brasileiros isentos de visto por até 90 dias, prorrogáveis.",
+      "badgeColor": "bg-green-100 text-green-700"
+    },
+    "passport": {
+      "minValidityMonths": 0,
+      "details": "Pode entrar com RG válido; passaporte não é obrigatório."
+    },
+    "vaccines": {
+      "required": [
+        "Febre amarela (algumas regiões)"
+      ],
+      "recommended": [
+        "Hepatite A",
+        "Febre tifoide",
+        "COVID-19"
+      ]
+    },
+    "maxStayDays": 90,
+    "officialUrl": "https://www.cancilleria.gov.co",
+    "lastUpdated": "2026-10-28"
+  },
+  {
+    "id": "de",
+    "slug": "alemanha",
+    "name": "Alemanha",
+    "keywords": [
+      "alemanha",
+      "germany",
+      "berlim",
+      "europa",
+      "schengen"
+    ],
+    "flag": "🇩🇪",
+    "visa": {
+      "type": "exempt",
+      "label": "Isento de visto",
+      "description": "Brasileiros isentos de visto por até 90 dias em período de 180 dias (Schengen).",
+      "badgeColor": "bg-green-100 text-green-700"
+    },
+    "passport": {
+      "minValidityMonths": 3,
+      "details": "Passaporte válido por pelo menos 3 meses após a data de saída do espaço Schengen."
+    },
+    "vaccines": {
+      "required": [],
+      "recommended": [
+        "COVID-19",
+        "Influenza"
+      ]
+    },
+    "maxStayDays": 90,
+    "officialUrl": "https://www.auswaertiges-amt.de",
+    "lastUpdated": "2026-10-28"
+  },
+  {
+    "id": "uy",
+    "slug": "uruguai",
+    "name": "Uruguai",
+    "keywords": [
+      "uruguai",
+      "montevideo",
+      "mercosul"
+    ],
+    "flag": "🇺🇾",
+    "visa": {
+      "type": "exempt",
+      "label": "Isento de visto",
+      "description": "Brasileiros entram sem visto, apenas com RG ou passaporte, por até 90 dias.",
+      "badgeColor": "bg-green-100 text-green-700"
+    },
+    "passport": {
+      "minValidityMonths": 0,
+      "details": "Pode entrar com RG válido; passaporte não é obrigatório."
+    },
+    "vaccines": {
+      "required": [],
+      "recommended": [
+        "COVID-19",
+        "Influenza"
+      ]
+    },
+    "maxStayDays": 90,
+    "officialUrl": "https://www.gub.uy/ministerio-relaciones-exteriores",
+    "lastUpdated": "2026-10-28"
+  }
+]

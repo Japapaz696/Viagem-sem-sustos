@@ -57,9 +57,10 @@ export default function DestinationCard({
                 <h3 className="text-lg font-extrabold text-white leading-tight group-hover:text-[var(--accent)] transition-colors truncate drop-shadow-sm">
                   {country.name}
                 </h3>
-                <p className="text-xs text-white/80 font-medium leading-tight line-clamp-1 drop-shadow-sm">
+                <p className="text-xs text-white/80 font-medium leading-tight line-clamp-2 drop-shadow-sm">
                   {country.maxStayDays ? `${country.maxStayDays} dias máx.` : 'Sem limite'} ·{' '}
-                  {country.vaccines.required.length > 0 ? 'Vacina obrigatória' : 'Sem vacina obrigatória'}
+                  {country.vaccines.required.length > 0 ? 'Vacina obrigatória' : 'Vacina não obrigatória'} ·{' '}
+                  {country.visa.type === 'exempt' ? 'Visto não exigido' : country.visa.type === 'evisa' ? 'E-Visa' : 'Verificar oficial'}
                 </p>
               </div>
             </div>

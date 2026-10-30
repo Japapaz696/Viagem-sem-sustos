@@ -42,14 +42,14 @@ export default function DestinationDetail({ country }: { country: Country }) {
       className="w-full"
       aria-labelledby="detail-title"
     >
-      <div className="relative mb-5 overflow-hidden rounded-[2rem] shadow-2xl shadow-black/40">
+      <div className="relative mb-5 overflow-hidden rounded-[2rem] shadow-soft">
         <img
           src={getDestinationImage(country.id)}
           alt={`Paisagem de ${country.name}`}
           className="h-48 w-full object-cover sm:h-64"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F17]/90 via-[#0B0F17]/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
         <div className="absolute bottom-4 left-4 z-10 flex items-center gap-3">
           <span className="text-3xl" aria-hidden="true">{country.flag}</span>
           <div>
@@ -104,7 +104,7 @@ export default function DestinationDetail({ country }: { country: Country }) {
           href={country.officialUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-indigo-500 to-blue-500 px-6 py-3.5 font-semibold text-white shadow-lg shadow-indigo-900/30 transition-transform active:scale-[0.98] hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60 sm:w-auto"
+          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[var(--accent)] to-blue-500 px-6 py-3.5 font-semibold text-white shadow-lg shadow-blue-900/30 transition-transform active:scale-[0.98] hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/60 sm:w-auto"
         >
           <ExternalLink className="h-5 w-5" aria-hidden="true" />
           Site oficial da imigração
@@ -113,14 +113,15 @@ export default function DestinationDetail({ country }: { country: Country }) {
           <button
             type="button"
             onClick={handleCopyChecklist}
-            className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.05] px-6 py-3 font-medium text-white shadow-sm transition-all active:scale-[0.98] hover:bg-white/[0.1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60"
+            className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-6 py-3 font-medium text-[var(--fg-strong)] shadow-sm transition-all active:scale-[0.98] hover:bg-[var(--accent-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/60"
           >
             {copied ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
             {copied ? 'Copiado!' : 'Copiar Checklist'}
           </button>
           <ShareButton country={country} />
         </div>
-        <p className="text-xs text-slate-500">Última atualização: {country.lastUpdated}</p>
+        <p className="text-xs text-[var(--muted)]">Última atualização: {country.lastUpdated}</p>
+      <p className="text-xs text-[var(--muted-soft)] mt-1">⚠️ Requisitos podem mudar. Confirme em fontes oficiais antes de viajar.</p>
       </div>
     </motion.section>
   );

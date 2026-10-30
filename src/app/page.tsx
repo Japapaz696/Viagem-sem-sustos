@@ -167,6 +167,12 @@ export default function Home() {
                   Nenhum destino encontrado para os filtros aplicados.
                 </div>
               )}
+
+              {/* Disclaimer sobre fontes oficiais */}
+              <div className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 text-xs text-[var(--muted)]">
+                <p className="font-semibold mb-1">⚠️ Informações sujeitas a alteração</p>
+                <p>Os requisitos de visto, vacina e passaporte podem mudar. Sempre confirme em fontes oficiais (consulados, embaixadas, IATA) antes de viajar. O ViagemSemSusto não se responsabiliza por mudanças nas regras de imigração.</p>
+              </div>
             </>
           )}
 

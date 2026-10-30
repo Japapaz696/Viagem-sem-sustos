@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "skills": {
+    "building-accessible-interfaces": {
+      "source": "osmontero/opencode-skills",
+      "sourceType": "github",
+      "skillPath": "skills/building-accessible-interfaces/SKILL.md",
+      "computedHash": "f0a9e23166d820551677e7fe9cc7239e519a453ee193cd60c8dde32772bd5dde"
+    },
+    "designing-frontend-interfaces": {
+      "source": "osmontero/opencode-skills",
+      "sourceType": "github",
+      "skillPath": "skills/designing-frontend-interfaces/SKILL.md",
+      "computedHash": "ce02f3782c73a63a2dcf194603cc3c855c110f2b31295f327202b3859679d72b"
+    },
+    "designing-user-experience": {
+      "source": "osmontero/opencode-skills",
+      "sourceType": "github",
+      "skillPath": "skills/designing-user-experience/SKILL.md",
+      "computedHash": "78db0278c8f026786c1c4f3152958b41ccdda10cc6fc7f61f214124796da56fc"
+    },
+    "reviewing-interface-quality": {
+      "source": "osmontero/opencode-skills",
+      "sourceType": "github",
+      "skillPath": "skills/reviewing-interface-quality/SKILL.md",
+      "computedHash": "ec2148c26668b534e3537224901832036eed9d737a7467b53229306ac271b982"
+    },
+    "systematic-debugging": {
+      "source": "osmontero/opencode-skills",
+      "sourceType": "github",
+      "skillPath": "skills/systematic-debugging/SKILL.md",
+      "computedHash": "e31feef6993aa6ae0c30e4ef5fa79f642807663cc1637ce95c9d6259e14df5ff"
+    },
+    "testing-webapps": {
+      "source": "osmontero/opencode-skills",
+      "sourceType": "github",
+      "skillPath": "skills/testing-webapps/SKILL.md",
+      "computedHash": "90a43834608213196d61fc95ad9d6ed2fa11542242aa9a82b2134d4db4bc3e62"
+    },
+    "verifying-before-completion": {
+      "source": "osmontero/opencode-skills",
+      "sourceType": "github",
+      "skillPath": "skills/verifying-before-completion/SKILL.md",
+      "computedHash": "1409bb3fda17a552d62c82655d30befc51296c76f18a49f6f37c05e1d4d2b54a"
+    }
+  }
+}

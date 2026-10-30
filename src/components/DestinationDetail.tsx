@@ -42,24 +42,24 @@ export default function DestinationDetail({ country }: { country: Country }) {
       className="w-full"
       aria-labelledby="detail-title"
     >
-      <div className="relative mb-5 overflow-hidden rounded-[2rem] shadow-soft">
+      <div className="relative mb-4 overflow-hidden rounded-card">
         <img
           src={getDestinationImage(country.id)}
           alt={`Paisagem de ${country.name}`}
-          className="h-48 w-full object-cover sm:h-64"
+          className="h-40 w-full object-cover"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-        <div className="absolute bottom-4 left-4 z-10 flex items-center gap-3">
-          <span className="text-3xl" aria-hidden="true">{country.flag}</span>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+        <div className="absolute bottom-3 left-3 z-10 flex items-center gap-2">
+          <span className="text-2xl" aria-hidden="true">{country.flag}</span>
           <div>
-            <h2 id="detail-title" className="text-2xl font-extrabold text-white drop-shadow-md tracking-tight">{country.name}</h2>
-            <div className="mt-1.5"><StatusBadge type={country.visa.type} label={country.visa.label} /></div>
+            <h2 id="detail-title" className="text-lg font-bold text-white drop-shadow-md tracking-tight">{country.name}</h2>
+            <div className="mt-1"><StatusBadge type={country.visa.type} label={country.visa.label} /></div>
           </div>
         </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-3 grid-cols-1">
         <RequirementCard
           icon={ShieldCheck}
           title="Visto"
@@ -104,7 +104,7 @@ export default function DestinationDetail({ country }: { country: Country }) {
           href={country.officialUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[var(--accent)] to-blue-500 px-6 py-3.5 font-semibold text-white shadow-lg shadow-blue-900/30 transition-transform active:scale-[0.98] hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/60 sm:w-auto"
+          className="inline-flex w-full items-center justify-center gap-2 rounded-btn bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/60"
         >
           <ExternalLink className="h-5 w-5" aria-hidden="true" />
           Site oficial da imigração
@@ -113,7 +113,7 @@ export default function DestinationDetail({ country }: { country: Country }) {
           <button
             type="button"
             onClick={handleCopyChecklist}
-            className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-6 py-3 font-medium text-[var(--fg-strong)] shadow-sm transition-all active:scale-[0.98] hover:bg-[var(--accent-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/60"
+            className="inline-flex items-center gap-2 rounded-btn border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-sm font-medium text-[var(--fg-strong)] hover:bg-[var(--accent-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/60"
           >
             {copied ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
             {copied ? 'Copiado!' : 'Copiar Checklist'}

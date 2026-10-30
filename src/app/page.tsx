@@ -139,6 +139,10 @@ export default function Home() {
             <div className="flex flex-col lg:flex-row gap-6">
               {/* Coluna principal: filtros + grade */}
               <div className="flex-1 min-w-0">
+                <div className="mb-3">
+                  <h2 className="text-sm font-semibold text-[var(--fg-strong)] mb-1">Destinos para explorar</h2>
+                  <p className="text-xs text-[var(--muted)]">Consulte requisitos de visto, passaporte e vacinação por destino.</p>
+                </div>
                 <div className="mb-4">
                   <FilterChips active={filter} onChange={setFilter} />
                 </div>

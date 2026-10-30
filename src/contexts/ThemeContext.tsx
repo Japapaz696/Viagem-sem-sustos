@@ -9,6 +9,7 @@ interface ThemeContextValue {
   resolvedMode: 'light' | 'dark';
   setTheme: (t: Theme) => void;
   toggle: () => void;
+  mounted: boolean;
 }
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
@@ -56,7 +57,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, [resolvedMode]);
 
   return (
-    <ThemeContext.Provider value={{ theme, resolvedMode, setTheme, toggle }}>
+    <ThemeContext.Provider value={{ theme, resolvedMode, setTheme, toggle, mounted }}>
       <script
         dangerouslySetInnerHTML={{
           __html: `(function(){try{var t=localStorage.getItem('${STORAGE_KEY}');var m=t==='dark'||(t===null||t==='system'&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(m)document.documentElement.classList.add('dark');else document.documentElement.classList.remove('dark');}catch(e){}})();`,

@@ -156,7 +156,6 @@ export default function Home() {
                       onSelect={handleSelect}
                       saved={saved.has(c.id)}
                       onToggleSave={toggleSave}
-                      featured={i === 0 && activeTab === 'explore'}
                     />
                   ))}
                 </AnimatePresence>

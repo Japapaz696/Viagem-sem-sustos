@@ -1,7 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Bookmark, BookmarkCheck, Globe } from 'lucide-react';
+import { Bookmark, BookmarkCheck } from 'lucide-react';
 import StatusBadge from './StatusBadge';
 import { getDestinationImage } from '@/utils/images';
 import type { Country } from '@/types/country';
@@ -19,7 +20,15 @@ export default function DestinationCard({
   onToggleSave?: (id: string) => void;
   featured?: boolean;
 }) {
-  const isVisaExempt = country.visa.type === 'exempt';
+  const [imgSrc, setImgSrc] = useState(getDestinationImage(country.id));
+  const [imgError, setImgError] = useState(false);
+
+  function handleImgError() {
+    if (!imgError) {
+      setImgError(true);
+      setImgSrc(`https://picsum.photos/seed/${country.id}/1200/800`);
+    }
+  }
 
   return (
     <motion.article
@@ -29,20 +38,21 @@ export default function DestinationCard({
       exit={{ opacity: 0, y: -8, scale: 0.98 }}
       transition={{ type: 'spring', stiffness: 260, damping: 24 }}
       whileHover={{ y: -4 }}
-      className={`group relative overflow-hidden rounded-3xl border border-[var(--card-border)] bg-[var(--card)] shadow-soft hover:shadow-soft-lg transition-shadow duration-300 ${featured ? 'col-span-2 row-span-2' : ''}`}
+      className="group relative overflow-hidden rounded-3xl border border-[var(--card-border)] bg-[var(--card)] shadow-soft hover:shadow-soft-lg transition-shadow duration-300"
     >
       <button
         type="button"
         onClick={() => onSelect(country)}
-        className="block w-full h-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-indigo-500"
+        className="block w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-indigo-500"
         aria-label={`Ver detalhes de ${country.name}`}
       >
-        <div className="relative h-full overflow-hidden">
+        <div className="relative aspect-[4/3] overflow-hidden">
           <img
-            src={getDestinationImage(country.id)}
+            src={imgSrc}
             alt={`Foto de destinos para ${country.name}`}
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             loading="lazy"
+            onError={handleImgError}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
           {/* Top-left badge */}
@@ -50,19 +60,17 @@ export default function DestinationCard({
             <StatusBadge type={country.visa.type} label={country.visa.label} />
           </div>
           {/* Flag + name overlay */}
-          <div className="absolute bottom-0 left-0 right-0 p-5 pt-[calc(100%-1.5rem)] z-10 flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2 min-w-0">
-              <span className="text-2xl leading-none" aria-hidden="true">{country.flag}</span>
-              <div className="min-w-0">
-                <h3 className="text-lg font-extrabold text-white leading-tight group-hover:text-[var(--accent)] transition-colors truncate drop-shadow-sm">
-                  {country.name}
-                </h3>
-                <p className="text-xs text-white/80 font-medium leading-tight line-clamp-2 drop-shadow-sm">
-                  {country.maxStayDays ? `${country.maxStayDays} dias máx.` : 'Sem limite'} ·{' '}
-                  {country.vaccines.required.length > 0 ? 'Vacina obrigatória' : 'Vacina não obrigatória'} ·{' '}
-                  {country.visa.type === 'exempt' ? 'Visto não exigido' : country.visa.type === 'evisa' ? 'E-Visa' : 'Verificar oficial'}
-                </p>
-              </div>
+          <div className="absolute bottom-0 left-0 right-0 p-4 z-10 flex items-center gap-2">
+            <span className="text-2xl leading-none" aria-hidden="true">{country.flag}</span>
+            <div className="min-w-0">
+              <h3 className="text-lg font-extrabold text-white leading-tight group-hover:text-[var(--accent)] transition-colors truncate drop-shadow-sm">
+                {country.name}
+              </h3>
+              <p className="text-xs text-white/80 font-medium leading-tight line-clamp-2 drop-shadow-sm">
+                {country.maxStayDays ? `${country.maxStayDays} dias máx.` : 'Sem limite'} ·{' '}
+                {country.vaccines.required.length > 0 ? 'Vacina obrigatória' : 'Vacina não obrigatória'} ·{' '}
+                {country.visa.type === 'exempt' ? 'Visto não exigido' : country.visa.type === 'evisa' ? 'E-Visa' : 'Verificar oficial'}
+              </p>
             </div>
           </div>
         </div>

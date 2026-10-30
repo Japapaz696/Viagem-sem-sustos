@@ -14,6 +14,9 @@ import MapView from '@/components/MapView';
 import AIAssistant from '@/components/AIAssistant';
 import SettingsPanel from '@/components/SettingsPanel';
 import SavedPanel from '@/components/SavedPanel';
+import PlanejarViagem from '@/components/PlanejarViagem';
+import Checklist from '@/components/Checklist';
+import CompararDestinos from '@/components/CompararDestinos';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Plane, Search, ShieldCheck } from 'lucide-react';
 
@@ -146,7 +149,7 @@ export default function Home() {
 
               <motion.div
                 layout
-                className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-start"
+                className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
               >
                 <AnimatePresence mode="popLayout">
                   {filtered.map((c, i) => (
@@ -198,6 +201,21 @@ export default function Home() {
           {/* Settings Tab */}
           {activeTab === 'settings' && (
             <SettingsPanel />
+          )}
+
+          {/* Planejar Tab */}
+          {activeTab === 'planejar' && (
+            <PlanejarViagem />
+          )}
+
+          {/* Checklist Tab */}
+          {activeTab === 'checklist' && (
+            <Checklist />
+          )}
+
+          {/* Comparar Tab */}
+          {activeTab === 'comparar' && (
+            <CompararDestinos />
           )}
         </div>
       </main>

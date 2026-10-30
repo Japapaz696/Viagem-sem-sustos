@@ -5,10 +5,10 @@ import FilterChip from './FilterChip';
 
 const FILTERS = [
   { id: 'all', label: 'Todos' },
-  { id: 'exempt', label: 'Sem Visto' },
-  { id: 'evisa', label: 'E-Visa' },
+  { id: 'exempt', label: 'Sem visto' },
   { id: 'south-america', label: 'América do Sul' },
   { id: 'schengen', label: 'Schengen' },
+  { id: 'evisa', label: 'E-Visa' },
 ];
 
 export default function FilterChips({ active, onChange }: { active: string; onChange: (id: string) => void }) {

@@ -1,12 +1,15 @@
 'use client';
 
-import { Compass, Map, Bookmark, Settings, Plane } from 'lucide-react';
+import { Compass, Map, Bookmark, Settings, Plane, ClipboardList, GitCompare, Calendar } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 
 const items = [
   { id: 'explore', label: 'Explorar', icon: Compass },
   { id: 'destinations', label: 'Destinos', icon: Map },
+  { id: 'planejar', label: 'Planejar', icon: Calendar },
+  { id: 'checklist', label: 'Checklist', icon: ClipboardList },
+  { id: 'comparar', label: 'Comparar', icon: GitCompare },
   { id: 'saved', label: 'Salvos', icon: Bookmark },
   { id: 'settings', label: 'Ajustes', icon: Settings },
 ];

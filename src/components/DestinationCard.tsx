@@ -12,13 +12,11 @@ export default function DestinationCard({
   onSelect,
   saved,
   onToggleSave,
-  featured = false,
 }: {
   country: Country;
   onSelect: (c: Country) => void;
   saved?: boolean;
   onToggleSave?: (id: string) => void;
-  featured?: boolean;
 }) {
   const [imgSrc, setImgSrc] = useState(getDestinationImage(country.id));
   const [imgError, setImgError] = useState(false);
@@ -26,7 +24,7 @@ export default function DestinationCard({
   function handleImgError() {
     if (!imgError) {
       setImgError(true);
-      setImgSrc(`https://picsum.photos/seed/${country.id}/1200/800`);
+      setImgSrc(`https://picsum.photos/seed/${country.id}/600/400`);
     }
   }
 
@@ -38,7 +36,7 @@ export default function DestinationCard({
       exit={{ opacity: 0, y: -8, scale: 0.98 }}
       transition={{ type: 'spring', stiffness: 260, damping: 24 }}
       whileHover={{ y: -4 }}
-      className="group relative overflow-hidden rounded-3xl border border-[var(--card-border)] bg-[var(--card)] shadow-soft hover:shadow-soft-lg transition-shadow duration-300"
+      className="group relative overflow-hidden rounded-3xl border border-[var(--card-border)] bg-[var(--card)] shadow-soft hover:shadow-soft-lg transition-shadow duration-300 flex flex-col"
     >
       <button
         type="button"
@@ -51,28 +49,25 @@ export default function DestinationCard({
             src={imgSrc}
             alt={`Foto de destinos para ${country.name}`}
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-            loading="lazy"
+            loading="eager"
             onError={handleImgError}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-          {/* Top-left badge */}
-          <div className="absolute left-3 top-3 z-10">
+          <div className="absolute top-3 left-3 z-10">
             <StatusBadge type={country.visa.type} label={country.visa.label} />
           </div>
-          {/* Flag + name overlay */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 z-10 flex items-center gap-2">
-            <span className="text-2xl leading-none" aria-hidden="true">{country.flag}</span>
-            <div className="min-w-0">
-              <h3 className="text-lg font-extrabold text-white leading-tight group-hover:text-[var(--accent)] transition-colors truncate drop-shadow-sm">
-                {country.name}
-              </h3>
-              <p className="text-xs text-white/80 font-medium leading-tight line-clamp-2 drop-shadow-sm">
-                {country.maxStayDays ? `${country.maxStayDays} dias máx.` : 'Sem limite'} ·{' '}
-                {country.vaccines.required.length > 0 ? 'Vacina obrigatória' : 'Vacina não obrigatória'} ·{' '}
-                {country.visa.type === 'exempt' ? 'Visto não exigido' : country.visa.type === 'evisa' ? 'E-Visa' : 'Verificar oficial'}
-              </p>
-            </div>
+        </div>
+        <div className="p-4 flex flex-col gap-1">
+          <div className="flex items-center gap-2">
+            <span className="text-xl leading-none" aria-hidden="true">{country.flag}</span>
+            <h3 className="text-base font-extrabold text-[var(--fg-strong)] leading-tight truncate">
+              {country.name}
+            </h3>
           </div>
+          <p className="text-xs text-[var(--muted)] font-medium leading-tight line-clamp-2">
+            {country.maxStayDays ? `${country.maxStayDays} dias máx.` : 'Sem limite'} ·{' '}
+            {country.vaccines.required.length > 0 ? 'Vacina obrigatória' : 'Vacina não obrigatória'} ·{' '}
+            {country.visa.type === 'exempt' ? 'Visto não exigido' : country.visa.type === 'evisa' ? 'E-Visa' : 'Verificar oficial'}
+          </p>
         </div>
       </button>
 

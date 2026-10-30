@@ -70,7 +70,13 @@ export default function DestinationDetail({ country }: { country: Country }) {
         <RequirementCard
           icon={BookOpen}
           title="Passaporte"
-          value={`Mínimo ${country.passport.minValidityMonths} ${country.passport.minValidityMonths === 1 ? 'mês' : 'meses'}`}
+          value={
+            country.id === 'br'
+              ? 'Não se aplica'
+              : country.passport.minValidityMonths === 0
+              ? 'Válido na estadia'
+              : `Mínimo ${country.passport.minValidityMonths} ${country.passport.minValidityMonths === 1 ? 'mês' : 'meses'}`
+          }
           description={country.passport.details}
           index={1}
         >
@@ -93,8 +99,18 @@ export default function DestinationDetail({ country }: { country: Country }) {
         <RequirementCard
           icon={Calendar}
           title="Estadia Máxima"
-          value={`${country.maxStayDays} dias`}
-          description="Tempo máximo de permanência para turismo."
+          value={
+            country.id === 'br'
+              ? 'Não se aplica'
+              : country.maxStayDays === 0
+              ? 'Não definido'
+              : `${country.maxStayDays} dias`
+          }
+          description={
+            country.id === 'br'
+              ? 'Você já está no país de origem.'
+              : 'Tempo máximo de permanência para turismo.'
+          }
           index={3}
         />
       </div>

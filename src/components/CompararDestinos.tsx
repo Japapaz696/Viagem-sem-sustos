@@ -72,13 +72,13 @@ export default function CompararDestinos() {
                 <tr className="border-b border-[var(--border)]">
                   <td className="px-4 py-3 text-[var(--muted)] font-medium">Permanência máxima</td>
                   {selectedCountries.map(c => (
-                    <td key={c.id} className="px-4 py-3 text-center text-[var(--fg-strong)]">{c.maxStayDays ? `${c.maxStayDays} dias` : 'Sem limite'}</td>
+                    <td key={c.id} className="px-4 py-3 text-center text-[var(--fg-strong)]">{c.id === 'br' ? 'Não se aplica' : c.maxStayDays ? `${c.maxStayDays} dias` : 'Sem limite definido'}</td>
                   ))}
                 </tr>
                 <tr className="border-b border-[var(--border)]">
                   <td className="px-4 py-3 text-[var(--muted)] font-medium">Passaporte (validade mín.)</td>
                   {selectedCountries.map(c => (
-                    <td key={c.id} className="px-4 py-3 text-center text-[var(--fg-strong)]">{c.passport.minValidityMonths} meses</td>
+                    <td key={c.id} className="px-4 py-3 text-center text-[var(--fg-strong)]">{c.id === 'br' ? 'Não se aplica' : c.passport.minValidityMonths === 0 ? 'Válido na estadia' : `${c.passport.minValidityMonths} meses`}</td>
                   ))}
                 </tr>
                 <tr className="border-b border-[var(--border)]">

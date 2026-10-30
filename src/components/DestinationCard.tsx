@@ -64,7 +64,11 @@ export default function DestinationCard({
             </h3>
           </div>
           <p className="text-xs text-[var(--muted)] leading-tight line-clamp-2">
-            {country.maxStayDays ? `${country.maxStayDays} dias máx.` : 'Sem limite'} ·{' '}
+            {country.id === 'br'
+              ? 'País de origem'
+              : country.maxStayDays
+              ? `${country.maxStayDays} dias máx.`
+              : 'Sem limite definido'} ·{' '}
             {country.vaccines.required.length > 0 ? 'Vacina obrigatória' : 'Vacina não obrigatória'}
           </p>
         </div>

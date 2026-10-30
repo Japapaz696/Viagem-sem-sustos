@@ -34,7 +34,7 @@ export default function DestinationDetail({ country }: { country: Country }) {
     const text = [
       `Requisitos de viagem para ${country.name}`,
       `Visto: ${country.visa.label} — ${country.visa.description}`,
-      `Passaporte: ${getPassportText(country)}. ${country.passport.details}`,
+      `Passaporte: ${getPassportText(country)}.`,
       `Vacinas obrigatórias: ${country.vaccines.required.join(', ') || 'Nenhuma'}`,
       `Vacinas recomendadas: ${country.vaccines.recommended.join(', ') || 'Nenhuma'}`,
       `Estadia máxima: ${getStayText(country)}`,
@@ -99,7 +99,7 @@ export default function DestinationDetail({ country }: { country: Country }) {
           index={1}
         >
           {country.id !== 'br' && country.passport.minValidityMonths > 0 && (
-            <DatePicker minValidityMonths={country.passport.minValidityMonths} />
+            <DatePicker minValidityMonths={country.passport.minValidityMonths} passportDetails={country.passport.details} />
           )}
         </RequirementCard>
         <RequirementCard

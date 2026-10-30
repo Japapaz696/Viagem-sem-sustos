@@ -1,47 +1,112 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { CalendarDays, CheckCircle2, XCircle } from 'lucide-react';
+import { CalendarDays, CheckCircle2, XCircle, AlertCircle } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
 export default function DatePicker({
   minValidityMonths,
+  passportDetails,
   travelDate: initialTravelDate,
   passportExpiry: initialPassportExpiry,
 }: {
   minValidityMonths: number;
+  passportDetails?: string;
   travelDate?: string;
   passportExpiry?: string;
 }) {
   const [travelDate, setTravelDate] = useState(initialTravelDate ?? '');
+  const [returnDate, setReturnDate] = useState('');
   const [passportExpiry, setPassportExpiry] = useState(initialPassportExpiry ?? '');
 
+  // Determinar a data de referência com base no texto existente
+  const referenceType = useMemo(() => {
+    if (!passportDetails) return 'travel';
+    const details = passportDetails.toLowerCase();
+    if (details.includes('retorno') || details.includes('saída') || details.includes('saida') || details.includes('após')) {
+      return 'return';
+    }
+    return 'travel';
+  }, [passportDetails]);
+
+  const canVerify = useMemo(() => {
+    if (minValidityMonths === 0) return false;
+    if (referenceType === 'return' && !returnDate) return false;
+    if (referenceType === 'travel' && !travelDate) return false;
+    return true;
+  }, [minValidityMonths, referenceType, travelDate, returnDate]);
+
   const result = useMemo(() => {
-    if (!passportExpiry) return null;
+    if (!passportExpiry || !canVerify) return null;
     const expiry = new Date(passportExpiry + 'T00:00:00');
-    const base = travelDate ? new Date(travelDate + 'T00:00:00') : new Date();
+    const baseDate = referenceType === 'return' ? returnDate : travelDate;
+    const base = baseDate ? new Date(baseDate + 'T00:00:00') : new Date();
     const required = new Date(base.getTime());
     required.setMonth(required.getMonth() + minValidityMonths);
     const eligible = expiry.getTime() >= required.getTime();
     const requiredStr = required.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
-    return { eligible, requiredStr };
-  }, [passportExpiry, travelDate, minValidityMonths]);
+    return { eligible, requiredStr, referenceType };
+  }, [passportExpiry, travelDate, returnDate, minValidityMonths, referenceType, canVerify]);
+
+  // Se a regra não indicar claramente a data de referência
+  const unclearReference = useMemo(() => {
+    if (minValidityMonths === 0) return false;
+    if (!passportDetails) return true;
+    const details = passportDetails.toLowerCase();
+    return !details.includes('retorno') && !details.includes('saída') && !details.includes('saida') && !details.includes('após') && !details.includes('durante') && !details.includes('estadia');
+  }, [minValidityMonths, passportDetails]);
 
   return (
     <div className="mt-4 rounded-xl bg-black/5 p-3 dark:bg-white/5">
-      <div className="grid gap-3 sm:grid-cols-2">
-        <div>
-          <label htmlFor="travel-date" className="block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
-            Data da viagem
-          </label>
-          <input
-            id="travel-date"
-            type="date"
-            value={travelDate}
-            onChange={(e) => setTravelDate(e.target.value)}
-            className="mt-1 w-full rounded-lg border border-black/10 bg-white px-3 py-2 text-sm text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#007AFF] dark:border-white/10 dark:bg-slate-800 dark:text-white"
-          />
+      {unclearReference && (
+        <div className="mb-3 flex items-start gap-2 rounded-lg bg-amber-500/10 p-2 text-xs text-amber-700 dark:text-amber-400">
+          <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" aria-hidden="true" />
+          <p>A data de referência não está clara no texto disponível. Confirme a regra em fontes oficiais antes de viajar.</p>
         </div>
+      )}
+      <div className="grid gap-3 sm:grid-cols-2">
+        {referenceType === 'return' && (
+          <>
+            <div>
+              <label htmlFor="travel-date" className="block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                Data da viagem (ida)
+              </label>
+              <input
+                id="travel-date"
+                type="date"
+                value={travelDate}
+                onChange={(e) => setTravelDate(e.target.value)}
+                className="mt-1 w-full rounded-lg border border-black/10 bg-white px-3 py-2 text-sm text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#007AFF] dark:border-white/10 dark:bg-slate-800 dark:text-white"
+              />
+            </div>
+            <div>
+              <label htmlFor="return-date" className="block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                Data de retorno
+              </label>
+              <input
+                id="return-date"
+                type="date"
+                value={returnDate}
+                onChange={(e) => setReturnDate(e.target.value)}
+                className="mt-1 w-full rounded-lg border border-black/10 bg-white px-3 py-2 text-sm text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#007AFF] dark:border-white/10 dark:bg-slate-800 dark:text-white"
+              />
+            </div>
+          </>
+        )}
+        {referenceType === 'travel' && (
+          <div>
+            <label htmlFor="travel-date" className="block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+              Data da viagem
+            </label>
+            <input
+              id="travel-date"
+              type="date"
+              value={travelDate}
+              onChange={(e) => setTravelDate(e.target.value)}
+              className="mt-1 w-full rounded-lg border border-black/10 bg-white px-3 py-2 text-sm text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#007AFF] dark:border-white/10 dark:bg-slate-800 dark:text-white"
+            />
+          </div>
+        )}
         <div>
           <label htmlFor="passport-expiry" className="block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
             Validade do passaporte
@@ -77,7 +142,7 @@ export default function DatePicker({
             : `Passaporte não elegível. Precisa ser válido até ${result.requiredStr}.`}
         </motion.div>
       )}
-      {!result && (
+      {!result && !unclearReference && (
         <p className="mt-3 flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
           <CalendarDays className="h-4 w-4" aria-hidden="true" />
           Selecione a validade do seu passaporte para validar elegibilidade.

@@ -1,6 +1,6 @@
 export function getDestinationImage(countryId: string): string {
-  // Usar picsum.photos com seed determinístico por país para garantir disponibilidade
-  return `https://picsum.photos/seed/${countryId}-travel/1200/800`;
+  // Fotos locais em public/imagens/Destinos/images-destinos, nomeadas pelo ID do país.
+  return `/imagens/Destinos/images-destinos/${countryId.toLowerCase()}.jpg`;
 }
 
 export function getFlagEmoji(countryId: string): string {

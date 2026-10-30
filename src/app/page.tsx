@@ -85,15 +85,15 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--fg)] selection:bg-[var(--accent-soft)]">
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--fg)] selection:bg-[var(--accent-soft)] md:flex">
       <Navbar active={activeTab} onChange={(tab) => { setActiveTab(tab); setSideOpen(false); setSelected(null); }} />
 
-      <main className="md:ml-72 md:pl-8 pt-6 pb-24 md:pb-6 min-h-screen bg-[var(--bg)]">
+      <main className="md:flex-1 pt-6 pb-24 md:pb-6 min-h-screen bg-[var(--bg)] min-w-0">
         {/* Header integrado */}
-        <header className="sticky top-0 z-30 px-6 md:px-10 pt-3 pb-4 flex items-center justify-between gap-4 backdrop-blur-2xl bg-[var(--surface)]/85 border-b border-[var(--border)] shadow-[var(--shadow-soft)]">
+        <header className="sticky top-0 z-30 px-6 md:px-10 pt-3 pb-4 flex items-center justify-between gap-4 bg-[var(--surface)] border-b border-[var(--border)]">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--accent-soft)] to-[var(--accent-soft)] border border-[var(--border)] shadow-sm">
-              <Plane className="h-5 w-5 text-[var(--accent)]" aria-hidden="true" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-btn bg-[var(--accent)]">
+              <Plane className="h-4 w-4 text-white" aria-hidden="true" />
             </div>
             <div>
               <h1 className="text-base font-extrabold tracking-tight leading-tight text-[var(--fg-strong)]">ViagemSemSusto</h1>
@@ -165,15 +165,14 @@ export default function Home() {
               </motion.div>
 
               {filtered.length === 0 && (
-                <div className="mt-8 rounded-4xl border border-[var(--border)] bg-[var(--card)] shadow-soft p-10 text-center text-[var(--muted)]">
+                <div className="mt-8 rounded-card border border-[var(--border)] bg-[var(--card)] p-8 text-center text-[var(--muted)]">
                   Nenhum destino encontrado para os filtros aplicados.
                 </div>
               )}
 
               {/* Disclaimer sobre fontes oficiais */}
-              <div className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 text-xs text-[var(--muted)]">
-                <p className="font-semibold mb-1">⚠️ Informações sujeitas a alteração</p>
-                <p>Os requisitos de visto, vacina e passaporte podem mudar. Sempre confirme em fontes oficiais (consulados, embaixadas, IATA) antes de viajar. O ViagemSemSusto não se responsabiliza por mudanças nas regras de imigração.</p>
+              <div className="mt-6 rounded-card border border-[var(--border)] bg-[var(--surface-muted)] p-3 text-xs text-[var(--muted)]">
+                <p>⚠️ Requisitos podem mudar. Confirme em fontes oficiais (consulados, embaixadas, IATA) antes de viajar.</p>
               </div>
             </>
           )}
@@ -181,7 +180,7 @@ export default function Home() {
           {/* Destinations Tab */}
           {activeTab === 'destinations' && (
             <div className="relative">
-              <div className="rounded-4xl overflow-hidden border border-[var(--border)] shadow-soft">
+              <div className="rounded-card overflow-hidden border border-[var(--border)]">
                 <MapView selected={selected} onSelect={handleSelect} />
               </div>
               <AIAssistant />

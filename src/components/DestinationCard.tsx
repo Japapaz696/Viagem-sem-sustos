@@ -24,31 +24,31 @@ export default function DestinationCard({
   function handleImgError() {
     if (!imgError) {
       setImgError(true);
-      setImgSrc(`https://picsum.photos/seed/${country.id}/600/400`);
+      setImgSrc(`/imagens/Destinos/images-destinos/${country.id}.jpg`);
     }
   }
 
   return (
     <motion.article
       layout
-      initial={{ opacity: 0, y: 16, scale: 0.98 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: -8, scale: 0.98 }}
-      transition={{ type: 'spring', stiffness: 260, damping: 24 }}
-      whileHover={{ y: -4 }}
-      className="group relative overflow-hidden rounded-3xl border border-[var(--card-border)] bg-[var(--card)] shadow-soft hover:shadow-soft-lg transition-shadow duration-300 flex flex-col"
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -8 }}
+      transition={{ duration: 0.2, ease: 'easeOut' }}
+      whileHover={{ y: -2 }}
+      className="group relative overflow-hidden rounded-card border border-[var(--card-border)] bg-[var(--card)] shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col"
     >
       <button
         type="button"
         onClick={() => onSelect(country)}
-        className="block w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-indigo-500"
+        className="block w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--accent)]"
         aria-label={`Ver detalhes de ${country.name}`}
       >
         <div className="relative aspect-[4/3] overflow-hidden">
           <img
             src={imgSrc}
             alt={`Foto de destinos para ${country.name}`}
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             loading="eager"
             onError={handleImgError}
           />
@@ -58,15 +58,14 @@ export default function DestinationCard({
         </div>
         <div className="p-4 flex flex-col gap-1">
           <div className="flex items-center gap-2">
-            <span className="text-xl leading-none" aria-hidden="true">{country.flag}</span>
-            <h3 className="text-base font-extrabold text-[var(--fg-strong)] leading-tight truncate">
+            <span className="text-lg leading-none" aria-hidden="true">{country.flag}</span>
+            <h3 className="text-sm font-bold text-[var(--fg-strong)] leading-tight truncate">
               {country.name}
             </h3>
           </div>
-          <p className="text-xs text-[var(--muted)] font-medium leading-tight line-clamp-2">
+          <p className="text-xs text-[var(--muted)] leading-tight line-clamp-2">
             {country.maxStayDays ? `${country.maxStayDays} dias máx.` : 'Sem limite'} ·{' '}
-            {country.vaccines.required.length > 0 ? 'Vacina obrigatória' : 'Vacina não obrigatória'} ·{' '}
-            {country.visa.type === 'exempt' ? 'Visto não exigido' : country.visa.type === 'evisa' ? 'E-Visa' : 'Verificar oficial'}
+            {country.vaccines.required.length > 0 ? 'Vacina obrigatória' : 'Vacina não obrigatória'}
           </p>
         </div>
       </button>
@@ -80,7 +79,7 @@ export default function DestinationCard({
           }}
           aria-label={saved ? 'Remover dos salvos' : 'Salvar destino'}
           aria-pressed={saved}
-          className="absolute right-3 top-3 z-20 flex h-9 w-9 items-center justify-center rounded-xl bg-white/90 border border-white/30 shadow-sm backdrop-blur-md text-slate-600 hover:bg-white hover:text-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/50 focus-visible:ring-offset-2 transition-colors"
+          className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-btn bg-white/90 border border-[var(--card-border)] text-[var(--muted)] hover:text-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] transition-colors"
         >
           {saved ? <BookmarkCheck className="h-4 w-4 text-emerald-500" /> : <Bookmark className="h-4 w-4" />}
         </button>

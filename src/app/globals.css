@@ -3,53 +3,51 @@
 @tailwind utilities;
 
 :root {
-  --bg: #F8F9FB;
+  --bg: #F7F8FA;
   --surface: #FFFFFF;
-  --surface-elevated: #FFFFFF;
+  --surface-muted: #F1F3F7;
   --card: #FFFFFF;
-  --card-border: #E2E8F0;
-  --fg: #0F172A;
-  --fg-strong: #0F172A;
-  --muted: #475569;
-  --muted-soft: #64748B;
+  --card-border: #E3E6EC;
+  --fg: #1A1D23;
+  --fg-strong: #0F1115;
+  --muted: #5A6270;
+  --muted-soft: #8B929E;
   --accent: #2563EB;
-  --accent-soft: rgba(37,99,235,0.08);
-  --accent-soft-hover: rgba(37,99,235,0.12);
-  --border: #E2E8F0;
-  --border-strong: #CBD5E1;
+  --accent-soft: rgba(37, 99, 235, 0.06);
+  --accent-soft-hover: rgba(37, 99, 235, 0.10);
+  --border: #E3E6EC;
+  --border-strong: #C8CDD6;
   --success: #16A34A;
   --danger: #DC2626;
   --warning: #D97706;
-  --shadow-soft: 0 4px 20px rgba(37,99,235,0.06);
-  --shadow-md: 0 8px 30px rgba(37,99,235,0.08);
-  --shadow-lg: 0 12px 32px rgba(37,99,235,0.12);
-  --radius-card: 1.75rem;
-  --radius-btn: 0.75rem;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --radius-card: 0.75rem;
+  --radius-btn: 0.5rem;
 }
 
 .dark {
-  --bg: #0B0F17;
-  --surface: #111827;
-  --surface-elevated: #1F2937;
-  --card: #111827;
-  --card-border: rgba(255,255,255,0.08);
-  --fg: #F1F5F9;
-  --fg-strong: #F8FAFC;
-  --muted: #94A3B8;
-  --muted-soft: #CBD5E1;
-  --accent: #60A5FA;
-  --accent-soft: rgba(96,165,250,0.12);
-  --accent-soft-hover: rgba(96,165,250,0.18);
-  --border: rgba(255,255,255,0.08);
-  --border-strong: rgba(255,255,255,0.15);
-  --success: #4ADE80;
-  --danger: #F87171;
-  --warning: #FB923C;
-  --shadow-soft: 0 4px 20px rgba(0,0,0,0.35);
-  --shadow-md: 0 8px 30px rgba(0,0,0,0.45);
-  --shadow-lg: 0 12px 32px rgba(0,0,0,0.55);
-  --radius-card: 1.75rem;
-  --radius-btn: 0.75rem;
+  --bg: #0D1117;
+  --surface: #161B22;
+  --surface-muted: #1C2128;
+  --card: #161B22;
+  --card-border: rgba(255, 255, 255, 0.08);
+  --fg: #E6EDF3;
+  --fg-strong: #F0F6FC;
+  --muted: #8B949E;
+  --muted-soft: #6E7681;
+  --accent: #58A6FF;
+  --accent-soft: rgba(88, 166, 255, 0.10);
+  --accent-soft-hover: rgba(88, 166, 255, 0.16);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.15);
+  --success: #3FB950;
+  --danger: #F85149;
+  --warning: #D29922;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --radius-card: 0.75rem;
+  --radius-btn: 0.5rem;
 }
 
 html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
@@ -57,48 +55,16 @@ body {
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-inter, 'Inter'), system-ui, -apple-system, sans-serif;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 ::selection { background: var(--accent-soft); color: inherit; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
 
 @layer components {
-  .glass {
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-  }
-  .glass-dark {
-    background: rgba(17, 24, 39, 0.8);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-  }
   .card {
     background: var(--card);
     border: 1px solid var(--card-border);
     border-radius: var(--radius-card);
-    box-shadow: var(--shadow-soft);
-  }
-  .btn-primary {
-    background: var(--accent);
-    color: #FFFFFF;
-    border-radius: var(--radius-btn);
-    font-weight: 600;
-    transition: all 0.2s ease;
-  }
-  .btn-primary:hover {
-    filter: brightness(1.05);
-    transform: translateY(-1px);
-  }
-  .btn-ghost {
-    background: transparent;
-    color: var(--muted);
-    border-radius: var(--radius-btn);
-    font-weight: 500;
-    transition: all 0.2s ease;
-  }
-  .btn-ghost:hover {
-    background: var(--accent-soft);
-    color: var(--accent);
+    box-shadow: var(--shadow-sm);
   }
 }

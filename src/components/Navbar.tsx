@@ -19,7 +19,7 @@ export default function Navbar({ active, onChange }: { active: string; onChange:
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex md:w-72 md:flex-col md:h-screen md:sticky md:top-0 md:border-r md:border-[var(--border)] md:bg-[var(--surface)]/80 md:backdrop-blur-2xl shadow-[4px_0_24px_rgba(37,99,235,0.06)]">
+      <aside className="hidden md:flex md:w-72 md:flex-col md:h-screen md:sticky md:top-0 md:shrink-0 md:border-r md:border-[var(--border)] md:bg-[var(--surface)]/80 md:backdrop-blur-2xl shadow-[4px_0_24px_rgba(37,99,235,0.06)]">
         <div className="p-6">
           <a href="#" className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40 rounded-2xl p-2 -m-2">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--accent-soft)] to-[var(--accent-soft)] border border-[var(--border)] shadow-sm group-hover:shadow-md transition-all">
@@ -76,11 +76,11 @@ export default function Navbar({ active, onChange }: { active: string; onChange:
                   type="button"
                   onClick={() => onChange(item.id)}
                   aria-current={isActive ? 'page' : undefined}
-                  className={`flex flex-col items-center gap-0.5 rounded-xl px-4 py-2 text-[10px] font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40 ${
+                  className={`flex flex-col items-center gap-0.5 rounded-xl px-2 py-1.5 text-[9px] font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40 ${
                     isActive ? 'text-[var(--accent)]' : 'text-[var(--muted)] hover:text-[var(--fg-strong)]'
                   }`}
                 >
-                  <Icon className="h-5 w-5" aria-hidden="true" />
+                  <Icon className="h-4 w-4" aria-hidden="true" />
                   <span>{item.label}</span>
                 </button>
               </li>

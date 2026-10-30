@@ -67,7 +67,10 @@ export default function Home() {
 
   function handleSelect(country: Country) {
     setSelected(country);
-    setSideOpen(true);
+    // No desktop (lg:), o painel lateral é mostrado; no mobile, abre o SideSheet
+    if (window.innerWidth < 1024) {
+      setSideOpen(true);
+    }
   }
 
   function toggleSave(id: string) {
@@ -133,48 +136,50 @@ export default function Home() {
 
           {/* Explore Tab */}
           {activeTab === 'explore' && (
-            <>
-              <div className="mb-6">
-                <FilterChips active={filter} onChange={setFilter} />
-              </div>
-
-              <section className="mb-6 max-w-[1400px] mx-auto">
-                <h2 className="flex items-end justify-between mb-6 text-lg font-bold tracking-tight text-[var(--fg-strong)]">
-                  <span className="text-[var(--accent)]">Os destinos que você precisa comparar primeiro.</span>
-                  <span className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)] bg-[var(--accent-soft)] px-2 py-1 rounded-full hidden sm:inline-block">
-                    Planejador abaixo
-                  </span>
-                </h2>
-              </section>
-
-              <motion.div
-                layout
-                className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-              >
-                <AnimatePresence mode="popLayout">
-                  {filtered.map((c, i) => (
-                    <DestinationCard
-                      key={c.id}
-                      country={c}
-                      onSelect={handleSelect}
-                      saved={saved.has(c.id)}
-                      onToggleSave={toggleSave}
-                    />
-                  ))}
-                </AnimatePresence>
-              </motion.div>
-
-              {filtered.length === 0 && (
-                <div className="mt-8 rounded-card border border-[var(--border)] bg-[var(--card)] p-8 text-center text-[var(--muted)]">
-                  Nenhum destino encontrado para os filtros aplicados.
+            <div className="flex flex-col lg:flex-row gap-6">
+              {/* Coluna principal: filtros + grade */}
+              <div className="flex-1 min-w-0">
+                <div className="mb-4">
+                  <FilterChips active={filter} onChange={setFilter} />
                 </div>
-              )}
 
-              {/* Disclaimer sobre fontes oficiais */}
-              <div className="mt-6 rounded-card border border-[var(--border)] bg-[var(--surface-muted)] p-3 text-xs text-[var(--muted)]">
-                <p>⚠️ Requisitos podem mudar. Confirme em fontes oficiais (consulados, embaixadas, IATA) antes de viajar.</p>
+                <motion.div
+                  layout
+                  className="grid grid-cols-2 gap-3 sm:grid-cols-2 lg:grid-cols-3"
+                >
+                  <AnimatePresence mode="popLayout">
+                    {filtered.map((c) => (
+                      <DestinationCard
+                        key={c.id}
+                        country={c}
+                        onSelect={handleSelect}
+                        saved={saved.has(c.id)}
+                        onToggleSave={toggleSave}
+                      />
+                    ))}
+                  </AnimatePresence>
+                </motion.div>
+
+                {filtered.length === 0 && (
+                  <div className="mt-8 rounded-card border border-[var(--border)] bg-[var(--card)] p-8 text-center text-[var(--muted)]">
+                    Nenhum destino encontrado para os filtros aplicados.
+                  </div>
+                )}
+
+                <div className="mt-6 rounded-card border border-[var(--border)] bg-[var(--surface-muted)] p-3 text-xs text-[var(--muted)]">
+                  <p>⚠️ Requisitos podem mudar. Confirme em fontes oficiais (consulados, embaixadas, IATA) antes de viajar.</p>
+                </div>
               </div>
-            </>
+
+              {/* Painel de detalhes (desktop) */}
+              {selected && (
+                <aside className="hidden lg:block w-80 shrink-0">
+                  <div className="sticky top-6 rounded-card border border-[var(--border)] bg-[var(--card)] p-4 shadow-sm">
+                    <DestinationDetail country={selected} />
+                  </div>
+                </aside>
+              )}
+            </div>
           )}
 
           {/* Destinations Tab */}

@@ -1,10 +1,10 @@
 'use client';
 
 import { useTheme } from '@/contexts/ThemeContext';
-import { ChevronRight, Shield, Download, Trash2, Sparkles, Database, Globe, Bell } from 'lucide-react';
+import { ChevronRight, Shield, Download, Trash2, Sparkles, Database, Globe, Bell, Clock3, Moon, Sun } from 'lucide-react';
 
 export default function SettingsPanel() {
-  const { theme, setTheme } = useTheme();
+  const { resolvedMode } = useTheme();
   return (
     <div className="space-y-6 max-w-3xl mx-auto">
       <h2 className="text-2xl font-extrabold tracking-tight text-[var(--fg-strong)]">Ajustes</h2>
@@ -17,26 +17,18 @@ export default function SettingsPanel() {
           </div>
           <h3 className="text-lg font-bold text-[var(--fg-strong)]">Aparência</h3>
         </div>
-        <div className="flex gap-2">
-          {[
-            { id: 'system', label: 'Sistema' },
-            { id: 'light', label: 'Claro' },
-            { id: 'dark', label: 'Escuro' },
-          ].map((t) => (
-            <button
-              key={t.id}
-              type="button"
-              onClick={() => setTheme(t.id as 'system' | 'light' | 'dark')}
-              aria-pressed={theme === t.id}
-              className={`rounded-xl border px-5 py-3 text-sm font-medium transition-all ${
-                theme === t.id
-                  ? 'border-[var(--accent)] bg-[var(--accent-soft)] text-[var(--accent)] shadow-[0_0_20px_rgba(37,99,235,0.15)]'
-                  : 'border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--fg-strong)]'
-              }`}
-            >
-              {t.label}
-            </button>
-          ))}
+        <div className="flex flex-wrap items-center gap-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-4">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent-soft)] text-[var(--accent)]">
+            {resolvedMode === 'dark' ? <Moon className="h-5 w-5" aria-hidden="true" /> : <Sun className="h-5 w-5" aria-hidden="true" />}
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-semibold text-[var(--fg-strong)]">Automático pelo horário local</p>
+            <p className="mt-1 text-xs text-[var(--muted)]">Claro das 06h às 17h59 · escuro das 18h às 05h59</p>
+          </div>
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--accent-soft)] px-3 py-1.5 text-xs font-medium text-[var(--accent)]">
+            <Clock3 className="h-3.5 w-3.5" aria-hidden="true" />
+            {resolvedMode === 'dark' ? 'Escuro agora' : 'Claro agora'}
+          </span>
         </div>
       </section>
 

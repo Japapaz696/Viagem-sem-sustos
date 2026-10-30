@@ -1,15 +1,16 @@
 'use client';
 
-import { Compass, Map, Bookmark, Settings, Plane, ClipboardList, GitCompare, Calendar, MoreHorizontal, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { Bookmark, Calendar, ClipboardList, Compass, GitCompare, Map, MoreHorizontal, Settings, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import BrandLogo from './BrandLogo';
 
 const desktopItems = [
   { id: 'explore', label: 'Explorar', icon: Compass },
   { id: 'destinations', label: 'Destinos', icon: Map },
-  { id: 'planejar', label: 'Planejar', icon: Calendar },
+  { id: 'planejar', label: 'Planejar viagem', icon: Calendar },
   { id: 'checklist', label: 'Checklist', icon: ClipboardList },
-  { id: 'comparar', label: 'Comparar', icon: GitCompare },
+  { id: 'comparar', label: 'Comparar destinos', icon: GitCompare },
   { id: 'saved', label: 'Salvos', icon: Bookmark },
   { id: 'settings', label: 'Ajustes', icon: Settings },
 ];
@@ -21,62 +22,103 @@ const mobileVisibleItems = [
   { id: 'saved', label: 'Salvos', icon: Bookmark },
   { id: 'settings', label: 'Ajustes', icon: Settings },
 ];
-
 const mobileMoreItems = [
   { id: 'checklist', label: 'Checklist', icon: ClipboardList },
   { id: 'comparar', label: 'Comparar', icon: GitCompare },
 ];
 
-export default function Navbar({ active, onChange }: { active: string; onChange: (id: string) => void }) {
+export function MenuToggle({ open, onClick, inverse = false }: { open: boolean; onClick: () => void; inverse?: boolean }) {
+  const reduceMotion = useReducedMotion();
+  const transition = reduceMotion ? { duration: 0 } : { duration: 0.2, ease: 'easeInOut' as const };
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={open ? 'Fechar menu' : 'Abrir menu'}
+      aria-expanded={open}
+      aria-controls="primary-navigation-drawer"
+      className={`group relative inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 ${inverse ? 'text-white hover:bg-white/10 focus-visible:ring-white' : 'text-[var(--fg-strong)] hover:bg-[var(--surface-muted)] focus-visible:ring-[var(--accent)]'}`}
+    >
+      <span className="sr-only">{open ? 'Fechar menu' : 'Abrir menu'}</span>
+      <span className="relative h-5 w-5" aria-hidden="true">
+        <motion.span animate={open ? { top: 9, rotate: 45 } : { top: 3, rotate: 0 }} transition={transition} className="absolute left-0 h-[2px] w-5 rounded-full bg-current" />
+        <motion.span animate={open ? { opacity: 0, scaleX: 0.5 } : { opacity: 1, scaleX: 1 }} transition={transition} className="absolute left-0 top-[9px] h-[2px] w-5 rounded-full bg-current" />
+        <motion.span animate={open ? { top: 9, rotate: -45 } : { top: 15, rotate: 0 }} transition={transition} className="absolute left-0 h-[2px] w-5 rounded-full bg-current" />
+      </span>
+    </button>
+  );
+}
+
+export default function Navbar({ active, onChange, open, onClose }: {
+  active: string;
+  onChange: (id: string) => void;
+  open: boolean;
+  onClose: () => void;
+}) {
   const [moreOpen, setMoreOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (event: KeyboardEvent) => { if (event.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [open, onClose]);
 
   return (
     <>
-      {/* Desktop Sidebar */}
-      <aside className="hidden md:flex md:w-64 md:flex-col md:h-screen md:sticky md:top-0 md:shrink-0 md:border-r md:border-[var(--border)] md:bg-[var(--surface)]">
-        <div className="p-5">
-          <a href="#" className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40 rounded-lg p-1 -m-1">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--accent)]">
-              <Plane className="h-4 w-4 text-white" aria-hidden="true" />
-            </div>
-            <div>
-              <h2 className="text-sm font-bold text-[var(--fg-strong)] tracking-tight leading-tight">ViagemSemSusto</h2>
-              <p className="text-[10px] text-[var(--muted)]">Guia de viagem e visto</p>
-            </div>
-          </a>
-        </div>
+      <AnimatePresence>
+        {open && (
+          <>
+            <motion.button
+              type="button"
+              aria-label="Fechar menu de navegação"
+              onClick={onClose}
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 0.18 }}
+              className="fixed inset-0 z-50 cursor-default bg-slate-950/35"
+            />
+            <motion.aside
+              id="primary-navigation-drawer"
+              aria-label="Menu principal"
+              initial={{ x: -288 }} animate={{ x: 0 }} exit={{ x: -288 }}
+              transition={{ type: reduceMotion ? 'tween' : 'spring', stiffness: 360, damping: 34, duration: reduceMotion ? 0 : undefined }}
+              className="fixed inset-y-0 left-0 z-[51] flex w-[min(18rem,88vw)] flex-col border-r border-[var(--border)] bg-[var(--surface)] shadow-2xl"
+            >
+              <div className="flex h-[68px] items-center justify-between border-b border-[var(--border)] px-5">
+                <BrandLogo />
+                <button type="button" onClick={onClose} aria-label="Fechar menu" className="rounded-lg p-2 text-[var(--muted)] hover:bg-[var(--surface-muted)] hover:text-[var(--fg-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">
+                  <X className="h-5 w-5" aria-hidden="true" />
+                </button>
+              </div>
+              <nav aria-label="Navegação principal" className="flex-1 overflow-y-auto px-3 py-5">
+                <p className="px-3 pb-2 text-xs font-medium text-[var(--muted)]">Seu espaço de viagem</p>
+                <ul className="space-y-1">
+                  {desktopItems.map((item) => {
+                    const Icon = item.icon;
+                    const isActive = item.id === active;
+                    return (
+                      <li key={item.id}>
+                        <button
+                          type="button"
+                          onClick={() => { onChange(item.id); onClose(); setMoreOpen(false); }}
+                          aria-current={isActive ? 'page' : undefined}
+                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] ${isActive ? 'bg-[var(--accent-soft)] text-[var(--accent)]' : 'text-[var(--fg)] hover:bg-[var(--surface-muted)]'}`}
+                        >
+                          <Icon className="h-[18px] w-[18px] shrink-0" aria-hidden="true" />
+                          {item.label}
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </nav>
+              <div className="border-t border-[var(--border)] px-5 py-4 text-xs text-[var(--muted)]">Viaje com informação e tranquilidade.</div>
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
 
-        <nav aria-label="Navegação principal" className="flex-1 px-3 py-2">
-          <ul className="space-y-0.5">
-            {desktopItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = item.id === active;
-              return (
-                <li key={item.id}>
-                  <button
-                    type="button"
-                    onClick={() => onChange(item.id)}
-                    aria-current={isActive ? 'page' : undefined}
-                    className={`relative flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40 ${
-                      isActive
-                        ? 'bg-[var(--accent-soft)] text-[var(--accent)]'
-                        : 'text-[var(--muted)] hover:bg-[var(--surface-muted)] hover:text-[var(--fg-strong)]'
-                    }`}
-                  >
-                    {isActive && (
-                      <span className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-[3px] rounded-r-full bg-[var(--accent)]" />
-                    )}
-                    <Icon className={`h-4 w-4 ${isActive ? 'text-[var(--accent)]' : 'text-[var(--muted-soft)]'}`} aria-hidden="true" />
-                    <span>{item.label}</span>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-      </aside>
-
-      {/* Mobile Bottom Nav */}
       <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-[var(--border)] bg-[var(--surface)] md:hidden" aria-label="Navegação principal">
         <ul className="flex items-center justify-around px-1 py-1.5">
           {mobileVisibleItems.map((item) => {
@@ -84,78 +126,31 @@ export default function Navbar({ active, onChange }: { active: string; onChange:
             const isActive = item.id === active;
             return (
               <li key={item.id}>
-                <button
-                  type="button"
-                  onClick={() => { onChange(item.id); setMoreOpen(false); }}
-                  aria-current={isActive ? 'page' : undefined}
-                  className={`flex flex-col items-center gap-0.5 rounded-lg px-2 py-1 text-[10px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40 ${
-                    isActive ? 'text-[var(--accent)]' : 'text-[var(--muted)]'
-                  }`}
-                >
-                  <Icon className="h-5 w-5" aria-hidden="true" />
-                  <span>{item.label}</span>
+                <button type="button" onClick={() => { onChange(item.id); setMoreOpen(false); }} aria-current={isActive ? 'page' : undefined}
+                  className={`flex flex-col items-center gap-0.5 rounded-lg px-2 py-1 text-[10px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] ${isActive ? 'text-[var(--accent)]' : 'text-[var(--muted)]'}`}>
+                  <Icon className="h-5 w-5" aria-hidden="true" /><span>{item.label}</span>
                 </button>
               </li>
             );
           })}
           <li>
-            <button
-              type="button"
-              onClick={() => setMoreOpen(!moreOpen)}
-              aria-expanded={moreOpen}
-              aria-label="Mais opções"
-              className={`flex flex-col items-center gap-0.5 rounded-lg px-2 py-1 text-[10px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40 ${
-                mobileMoreItems.some(i => i.id === active) ? 'text-[var(--accent)]' : 'text-[var(--muted)]'
-              }`}
-            >
-              <MoreHorizontal className="h-5 w-5" aria-hidden="true" />
-              <span>Mais</span>
+            <button type="button" onClick={() => setMoreOpen(!moreOpen)} aria-expanded={moreOpen} aria-label="Mais opções"
+              className={`flex flex-col items-center gap-0.5 rounded-lg px-2 py-1 text-[10px] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] ${mobileMoreItems.some(item => item.id === active) ? 'text-[var(--accent)]' : 'text-[var(--muted)]'}`}>
+              <MoreHorizontal className="h-5 w-5" aria-hidden="true" /><span>Mais</span>
             </button>
           </li>
         </ul>
       </nav>
 
-      {/* Mobile More Menu */}
       <AnimatePresence>
         {moreOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.15 }}
-            className="fixed bottom-16 left-2 right-2 z-50 rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-md md:hidden"
-          >
-            <ul className="p-2 space-y-1">
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: reduceMotion ? 0 : 0.16 }} className="fixed bottom-16 left-2 right-2 z-50 rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-lg md:hidden">
+            <ul className="space-y-1 p-2">
               {mobileMoreItems.map((item) => {
                 const Icon = item.icon;
-                const isActive = item.id === active;
-                return (
-                  <li key={item.id}>
-                    <button
-                      type="button"
-                      onClick={() => { onChange(item.id); setMoreOpen(false); }}
-                      className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
-                        isActive
-                          ? 'bg-[var(--accent-soft)] text-[var(--accent)]'
-                          : 'text-[var(--muted)] hover:bg-[var(--surface-muted)] hover:text-[var(--fg-strong)]'
-                      }`}
-                    >
-                      <Icon className="h-4 w-4" aria-hidden="true" />
-                      <span>{item.label}</span>
-                    </button>
-                  </li>
-                );
+                return <li key={item.id}><button type="button" onClick={() => { onChange(item.id); setMoreOpen(false); }} className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-[var(--fg)] hover:bg-[var(--surface-muted)]"><Icon className="h-4 w-4" aria-hidden="true" />{item.label}</button></li>;
               })}
-              <li>
-                <button
-                  type="button"
-                  onClick={() => setMoreOpen(false)}
-                  className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-[var(--muted)] hover:bg-[var(--surface-muted)]"
-                >
-                  <X className="h-4 w-4" aria-hidden="true" />
-                  <span>Fechar</span>
-                </button>
-              </li>
             </ul>
           </motion.div>
         )}

@@ -9,10 +9,16 @@ export default function SearchBar({
   countries,
   onSelectCountry,
   id = 'global-search',
+  onQueryChange,
+  onSearch,
+  variant = 'default',
 }: {
   countries: Country[];
   onSelectCountry: (country: Country) => void;
   id?: string;
+  onQueryChange?: (query: string) => void;
+  onSearch?: (query: string) => void;
+  variant?: 'default' | 'hero';
 }) {
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
@@ -39,28 +45,43 @@ export default function SearchBar({
   }, [query, countries]);
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto">
+    <div className={`relative mx-auto w-full ${variant === 'hero' ? 'max-w-4xl' : 'max-w-2xl'}`}>
       <div className="relative">
-        <div className="flex items-center gap-3 rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-5 py-3 shadow-[var(--shadow-soft)] transition-all hover:border-[var(--border-strong)] focus-within:border-[var(--accent)] focus-within:shadow-[var(--shadow-md)]">
-          <Search className="h-4 w-4 text-[var(--muted-soft)] shrink-0" aria-hidden="true" />
+        <div className={variant === 'hero'
+          ? 'flex items-center gap-3 rounded-xl border-2 border-sky-200 bg-white p-1.5 shadow-lg focus-within:border-sky-400'
+          : 'flex items-center gap-3 rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-5 py-3 shadow-[var(--shadow-soft)] transition-all hover:border-[var(--border-strong)] focus-within:border-[var(--accent)] focus-within:shadow-[var(--shadow-md)]'}>
+          <Search className={`ml-2 h-5 w-5 shrink-0 ${variant === 'hero' ? 'text-slate-500' : 'text-[var(--muted-soft)]'}`} aria-hidden="true" />
           <input
             ref={inputRef}
             id={id}
             type="search"
             value={query}
-            onChange={(e) => { setQuery(e.target.value); setOpen(true); }}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' && variant === 'hero') {
+                event.preventDefault();
+                onSearch?.(query);
+                setOpen(false);
+              }
+            }}
+            onChange={(e) => { setQuery(e.target.value); onQueryChange?.(e.target.value); setOpen(true); }}
             onFocus={() => setOpen(true)}
             onBlur={() => setTimeout(() => setOpen(false), 200)}
-            placeholder="Pesquise destinos..."
-            className="w-full bg-transparent text-sm font-medium text-[var(--fg-strong)] placeholder:text-[var(--muted-soft)] outline-none"
+            placeholder={variant === 'hero' ? 'Para onde você quer viajar?' : 'Pesquise destinos...'}
+            className={`w-full bg-transparent font-medium outline-none ${variant === 'hero' ? 'min-w-0 py-3 text-base text-slate-900 placeholder:text-slate-500 sm:text-lg' : 'text-sm text-[var(--fg-strong)] placeholder:text-[var(--muted-soft)]'}`}
             aria-label="Buscar destino"
             aria-autocomplete="list"
             aria-expanded={open && results.length > 0}
             aria-controls={`${id}-results`}
           />
-          <kbd className="hidden md:inline-flex h-7 items-center rounded-lg border border-[var(--border)] bg-[var(--surface)] px-2 text-[10px] font-medium text-[var(--muted-soft)] select-none">⌘ K</kbd>
+          {variant === 'default' && <kbd className="hidden h-7 select-none items-center rounded-lg border border-[var(--border)] bg-[var(--surface)] px-2 text-[10px] font-medium text-[var(--muted-soft)] md:inline-flex">⌘ K</kbd>}
           {query && (
             <button onClick={() => { setQuery(''); setOpen(false); }} aria-label="Limpar" className="text-[var(--muted-soft)] hover:text-[var(--fg-strong)] transition-colors"><X className="h-4 w-4" /></button>
+          )}
+          {variant === 'hero' && (
+            <button type="button" onClick={() => { onSearch?.(query); setOpen(false); inputRef.current?.blur(); }}
+              className="shrink-0 rounded-lg bg-[var(--accent)] px-4 py-3 text-sm font-semibold text-white transition-colors hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--accent)] sm:px-7">
+              Buscar destinos
+            </button>
           )}
         </div>
         <AnimatePresence>

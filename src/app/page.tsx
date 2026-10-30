@@ -8,17 +8,17 @@ import DestinationCard from '@/components/DestinationCard';
 import FilterChips from '@/components/FilterChips';
 import Navbar from '@/components/Navbar';
 import DestinationDetail from '@/components/DestinationDetail';
-import ThemeToggle from '@/components/ThemeToggle';
 import SideSheet from '@/components/SideSheet';
-import MapView from '@/components/MapView';
-import AIAssistant from '@/components/AIAssistant';
+import DestinationsExplorer from '@/components/DestinationsExplorer';
 import SettingsPanel from '@/components/SettingsPanel';
 import SavedPanel from '@/components/SavedPanel';
 import PlanejarViagem from '@/components/PlanejarViagem';
 import Checklist from '@/components/Checklist';
 import CompararDestinos from '@/components/CompararDestinos';
+import HeroFlightAnimation from '@/components/HeroFlightAnimation';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Plane, Search, ShieldCheck } from 'lucide-react';
+import BrandLogo from '@/components/BrandLogo';
+import { MenuToggle } from '@/components/Navbar';
 
 const countries = countriesData as Country[];
 const SOUTH_AMERICA = new Set(['ar', 'cl', 'co', 'uy', 'br']);
@@ -42,6 +42,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState('explore');
   const [query, setQuery] = useState('');
   const [saved, setSaved] = useState<Set<string>>(new Set());
+  const [navOpen, setNavOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -73,6 +74,11 @@ export default function Home() {
     }
   }
 
+  function handleDestinationSelect(country: Country) {
+    setSelected(country);
+    setSideOpen(false);
+  }
+
   function toggleSave(id: string) {
     setSaved((prev) => {
       const next = new Set(prev);
@@ -89,62 +95,60 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--fg)] selection:bg-[var(--accent-soft)] md:flex">
-      <Navbar active={activeTab} onChange={(tab) => { setActiveTab(tab); setSideOpen(false); setSelected(null); }} />
+      <Navbar active={activeTab} open={navOpen} onClose={() => setNavOpen(false)} onChange={(tab) => { setActiveTab(tab); setSideOpen(false); setSelected(null); setQuery(''); }} />
 
-      <main className="md:flex-1 pt-6 pb-24 md:pb-6 min-h-screen bg-[var(--bg)] min-w-0">
-        {/* Header integrado */}
-        <header className="sticky top-0 z-30 px-6 md:px-10 pt-3 pb-4 flex items-center justify-between gap-4 bg-[var(--surface)] border-b border-[var(--border)]">
+      <main className="min-h-screen min-w-0 flex-1 bg-[var(--bg)] pb-24 md:pb-8">
+        {activeTab !== 'explore' && <header className="sticky top-0 z-30 flex h-[68px] items-center justify-between gap-4 border-b border-[var(--border)] bg-[var(--surface)] px-4 md:px-8">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-btn bg-[var(--accent)]">
-              <Plane className="h-4 w-4 text-white" aria-hidden="true" />
-            </div>
-            <div>
-              <h1 className="text-base font-extrabold tracking-tight leading-tight text-[var(--fg-strong)]">ViagemSemSusto</h1>
-              <p className="text-[10px] text-[var(--muted)] font-medium">Seu guia de viagem e visto</p>
-            </div>
+            <MenuToggle open={navOpen} onClick={() => setNavOpen((value) => !value)} />
+            <BrandLogo />
           </div>
+        </header>}
 
-          <div className="flex-1 max-w-xl mx-auto hidden md:block">
-            <SearchBar
-              countries={countries}
-              onSelectCountry={(c) => {
-                setQuery(c.name);
-                handleSelect(c);
-              }}
-            />
-          </div>
-
-          <div className="flex items-center gap-3">
-            <ThemeToggle />
-            <button type="button" className="hidden md:inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--surface)] border border-[var(--border)] text-[var(--muted)] hover:text-[var(--fg-strong)] hover:bg-[var(--accent-soft)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40" aria-label="Perfil">
-              <ShieldCheck className="h-4 w-4" />
-            </button>
-          </div>
-        </header>
+        {activeTab === 'explore' && (
+          <section className="relative isolate overflow-hidden bg-[#0D4B78] text-white">
+            <HeroFlightAnimation />
+            <div className="relative z-10 mx-auto max-w-[1400px] px-5 pb-14 pt-4 md:px-10 md:pb-16 md:pt-5">
+              <div className="mb-9 flex items-center gap-3">
+                <MenuToggle open={navOpen} onClick={() => setNavOpen((value) => !value)} inverse />
+                <BrandLogo inverse />
+              </div>
+              <h1 className="max-w-3xl text-3xl font-bold tracking-[-0.035em] sm:text-4xl md:text-[44px] md:leading-[1.12]">
+                Encontre seu próximo destino com tranquilidade
+              </h1>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-sky-100 sm:text-base">
+                Pesquise um país e confira o que preparar antes de viajar.
+              </p>
+              <div className="mt-7">
+                <SearchBar
+                  id="explore-destination-search"
+                  variant="hero"
+                  countries={countries}
+                  onQueryChange={setQuery}
+                  onSearch={setQuery}
+                  onSelectCountry={(country) => { setQuery(country.name); handleSelect(country); }}
+                />
+              </div>
+            </div>
+          </section>
+        )}
 
         <div className="px-4 md:px-8 lg:px-10 py-6 max-w-[1400px] mx-auto">
-          {/* Mobile Search (visível apenas em mobile) */}
-          <div className="mb-6 md:hidden">
-            <SearchBar
-              countries={countries}
-              onSelectCountry={(c) => {
-                setQuery(c.name);
-                handleSelect(c);
-              }}
-            />
-          </div>
-
           {/* Explore Tab */}
           {activeTab === 'explore' && (
-            <div className="flex flex-col lg:flex-row gap-6">
+            <div>
+              <div className="relative -mt-11 mb-7 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-3 shadow-md sm:px-5">
+                <FilterChips active={filter} onChange={setFilter} />
+              </div>
+              <div className="flex flex-col gap-6 lg:flex-row">
               {/* Coluna principal: filtros + grade */}
               <div className="flex-1 min-w-0">
-                <div className="mb-3">
-                  <h2 className="text-sm font-semibold text-[var(--fg-strong)] mb-1">Destinos para explorar</h2>
-                  <p className="text-xs text-[var(--muted)]">Consulte requisitos de visto, passaporte e vacinação por destino.</p>
-                </div>
-                <div className="mb-4">
-                  <FilterChips active={filter} onChange={setFilter} />
+                <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+                  <div>
+                    <h2 className="text-xl font-bold tracking-tight text-[var(--fg-strong)]">Destinos para explorar</h2>
+                    <p className="mt-1 text-sm text-[var(--muted)]">Informações para começar a planejar com segurança.</p>
+                  </div>
+                  <span className="pb-0.5 text-sm text-[var(--muted)]">{filtered.length} destinos</span>
                 </div>
 
                 <motion.div
@@ -183,17 +187,13 @@ export default function Home() {
                   </div>
                 </aside>
               )}
+              </div>
             </div>
           )}
 
           {/* Destinations Tab */}
           {activeTab === 'destinations' && (
-            <div className="relative">
-              <div className="rounded-card overflow-hidden border border-[var(--border)]">
-                <MapView selected={selected} onSelect={handleSelect} />
-              </div>
-              <AIAssistant />
-            </div>
+            <DestinationsExplorer selected={selected} onSelect={handleDestinationSelect} onClear={() => setSelected(null)} />
           )}
 
           {/* Saved Tab */}

@@ -3,6 +3,7 @@
 import { GitCompare, Plus, Check } from 'lucide-react';
 import { useState } from 'react';
 import type { Country } from '@/types/country';
+import { getPassportRule } from '@/utils/passportRules';
 import countriesData from '@/data/countries.json';
 
 const countries = countriesData as Country[];
@@ -79,12 +80,14 @@ export default function CompararDestinos() {
                   <td className="px-4 py-3 text-[var(--muted)] font-medium">Passaporte (validade mín.)</td>
                   {selectedCountries.map(c => (
                     <td key={c.id} className="px-4 py-3 text-center text-[var(--fg-strong)]">
-                      {c.id === 'br'
+                      {getPassportRule(c.id, c.passport.minValidityMonths, c.passport.details) === 'origin'
                         ? 'Não se aplica'
-                        : c.passport.minValidityMonths === 0
-                        ? (c.passport.details.toLowerCase().includes('rg') || c.passport.details.toLowerCase().includes('identidade'))
-                          ? 'RG válido'
-                          : 'Válido na estadia'
+                        : getPassportRule(c.id, c.passport.minValidityMonths, c.passport.details) === 'identity-document'
+                        ? 'RG válido; passaporte opcional'
+                        : getPassportRule(c.id, c.passport.minValidityMonths, c.passport.details) === 'during-stay'
+                        ? 'Válido durante a estadia'
+                        : getPassportRule(c.id, c.passport.minValidityMonths, c.passport.details) === 'ambiguous'
+                        ? 'Confirme a regra oficial'
                         : `${c.passport.minValidityMonths} meses`}
                     </td>
                   ))}

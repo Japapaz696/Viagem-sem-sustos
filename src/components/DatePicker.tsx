@@ -2,14 +2,17 @@
 
 import { motion } from 'framer-motion';
 import { CalendarDays, CheckCircle2, XCircle, AlertCircle } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
+import { addCalendarMonths, getPassportRule } from '@/utils/passportRules';
 
 export default function DatePicker({
+  countryId,
   minValidityMonths,
   passportDetails,
   travelDate: initialTravelDate,
   passportExpiry: initialPassportExpiry,
 }: {
+  countryId: string;
   minValidityMonths: number;
   passportDetails?: string;
   travelDate?: string;
@@ -18,44 +21,32 @@ export default function DatePicker({
   const [travelDate, setTravelDate] = useState(initialTravelDate ?? '');
   const [returnDate, setReturnDate] = useState('');
   const [passportExpiry, setPassportExpiry] = useState(initialPassportExpiry ?? '');
+  const id = useId();
 
-  // Determinar a data de referência com base no texto existente
-  const referenceType = useMemo(() => {
-    if (!passportDetails) return 'travel';
-    const details = passportDetails.toLowerCase();
-    if (details.includes('retorno') || details.includes('saída') || details.includes('saida') || details.includes('após')) {
-      return 'return';
-    }
-    return 'travel';
-  }, [passportDetails]);
+  const rule = useMemo(() => getPassportRule(countryId, minValidityMonths, passportDetails ?? ''), [countryId, minValidityMonths, passportDetails]);
+  const referenceType = rule === 'after-return' || rule === 'during-stay' ? 'return' : 'travel';
+  const unclearReference = rule === 'ambiguous';
+  const invalidDateRange = referenceType === 'return' && travelDate && returnDate && returnDate < travelDate;
 
   const canVerify = useMemo(() => {
-    if (minValidityMonths === 0) return false;
+    if (unclearReference || invalidDateRange) return false;
     if (referenceType === 'return' && !returnDate) return false;
     if (referenceType === 'travel' && !travelDate) return false;
     return true;
-  }, [minValidityMonths, referenceType, travelDate, returnDate]);
+  }, [minValidityMonths, referenceType, travelDate, returnDate, unclearReference, invalidDateRange]);
 
   const result = useMemo(() => {
     if (!passportExpiry || !canVerify) return null;
     const expiry = new Date(passportExpiry + 'T00:00:00');
     const baseDate = referenceType === 'return' ? returnDate : travelDate;
     const base = baseDate ? new Date(baseDate + 'T00:00:00') : new Date();
-    const required = new Date(base.getTime());
-    required.setMonth(required.getMonth() + minValidityMonths);
+    const required = rule === 'during-stay' ? base : addCalendarMonths(base, minValidityMonths);
     const eligible = expiry.getTime() >= required.getTime();
     const requiredStr = required.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
     return { eligible, requiredStr, referenceType };
-  }, [passportExpiry, travelDate, returnDate, minValidityMonths, referenceType, canVerify]);
+  }, [passportExpiry, travelDate, returnDate, minValidityMonths, referenceType, canVerify, rule]);
 
   // Se a regra não indicar claramente a data de referência
-  const unclearReference = useMemo(() => {
-    if (minValidityMonths === 0) return false;
-    if (!passportDetails) return true;
-    const details = passportDetails.toLowerCase();
-    return !details.includes('retorno') && !details.includes('saída') && !details.includes('saida') && !details.includes('após') && !details.includes('durante') && !details.includes('estadia');
-  }, [minValidityMonths, passportDetails]);
-
   return (
     <div className="mt-4 rounded-xl bg-black/5 p-3 dark:bg-white/5">
       {unclearReference && (
@@ -64,15 +55,20 @@ export default function DatePicker({
           <p>A data de referência não está clara no texto disponível. Confirme a regra em fontes oficiais antes de viajar.</p>
         </div>
       )}
+      {invalidDateRange && (
+        <p className="mb-3 rounded-lg bg-amber-500/10 p-2 text-xs text-amber-700 dark:text-amber-400" role="alert">
+          A data de retorno precisa ser igual ou posterior à data de ida.
+        </p>
+      )}
       <div className="grid gap-3 sm:grid-cols-2">
         {referenceType === 'return' && (
           <>
             <div>
-              <label htmlFor="travel-date" className="block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+              <label htmlFor={`${id}-travel-date`} className="block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
                 Data da viagem (ida)
               </label>
               <input
-                id="travel-date"
+                id={`${id}-travel-date`}
                 type="date"
                 value={travelDate}
                 onChange={(e) => setTravelDate(e.target.value)}
@@ -80,11 +76,11 @@ export default function DatePicker({
               />
             </div>
             <div>
-              <label htmlFor="return-date" className="block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+              <label htmlFor={`${id}-return-date`} className="block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
                 Data de retorno
               </label>
               <input
-                id="return-date"
+                id={`${id}-return-date`}
                 type="date"
                 value={returnDate}
                 onChange={(e) => setReturnDate(e.target.value)}
@@ -95,11 +91,11 @@ export default function DatePicker({
         )}
         {referenceType === 'travel' && (
           <div>
-            <label htmlFor="travel-date" className="block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+            <label htmlFor={`${id}-travel-date`} className="block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
               Data da viagem
             </label>
             <input
-              id="travel-date"
+              id={`${id}-travel-date`}
               type="date"
               value={travelDate}
               onChange={(e) => setTravelDate(e.target.value)}
@@ -108,11 +104,11 @@ export default function DatePicker({
           </div>
         )}
         <div>
-          <label htmlFor="passport-expiry" className="block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+          <label htmlFor={`${id}-passport-expiry`} className="block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
             Validade do passaporte
           </label>
           <input
-            id="passport-expiry"
+            id={`${id}-passport-expiry`}
             type="date"
             value={passportExpiry}
             onChange={(e) => setPassportExpiry(e.target.value)}

@@ -9,6 +9,7 @@ import DatePicker from './DatePicker';
 import ShareButton from './ShareButton';
 import { getDestinationImage } from '@/utils/images';
 import type { Country } from '@/types/country';
+import { getPassportRule } from '@/utils/passportRules';
 
 export default function DestinationDetail({ country }: { country: Country }) {
   const [copied, setCopied] = useState(false);
@@ -98,8 +99,8 @@ export default function DestinationDetail({ country }: { country: Country }) {
           description={country.passport.details}
           index={1}
         >
-          {country.id !== 'br' && country.passport.minValidityMonths > 0 && (
-            <DatePicker minValidityMonths={country.passport.minValidityMonths} passportDetails={country.passport.details} />
+          {![ 'origin', 'identity-document' ].includes(getPassportRule(country.id, country.passport.minValidityMonths, country.passport.details)) && (
+            <DatePicker countryId={country.id} minValidityMonths={country.passport.minValidityMonths} passportDetails={country.passport.details} />
           )}
         </RequirementCard>
         <RequirementCard

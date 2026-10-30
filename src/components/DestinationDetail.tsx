@@ -14,14 +14,30 @@ export default function DestinationDetail({ country }: { country: Country }) {
   const [copied, setCopied] = useState(false);
   const hasRequiredVaccines = country.vaccines.required.length > 0;
 
+  function getPassportText(c: Country): string {
+    if (c.id === 'br') return 'Não se aplica (país de origem)';
+    if (c.passport.minValidityMonths === 0) {
+      const details = c.passport.details.toLowerCase();
+      if (details.includes('rg') || details.includes('identidade')) return 'RG válido; passaporte não obrigatório';
+      return 'Passaporte válido durante toda a estadia';
+    }
+    return `Mínimo ${c.passport.minValidityMonths} ${c.passport.minValidityMonths === 1 ? 'mês' : 'meses'}`;
+  }
+
+  function getStayText(c: Country): string {
+    if (c.id === 'br') return 'Não se aplica (país de origem)';
+    if (c.maxStayDays === 0) return 'Sem limite definido';
+    return `${c.maxStayDays} dias`;
+  }
+
   async function handleCopyChecklist() {
     const text = [
       `Requisitos de viagem para ${country.name}`,
       `Visto: ${country.visa.label} — ${country.visa.description}`,
-      `Passaporte: validade mínima ${country.passport.minValidityMonths} meses. ${country.passport.details}`,
+      `Passaporte: ${getPassportText(country)}. ${country.passport.details}`,
       `Vacinas obrigatórias: ${country.vaccines.required.join(', ') || 'Nenhuma'}`,
       `Vacinas recomendadas: ${country.vaccines.recommended.join(', ') || 'Nenhuma'}`,
-      `Estadia máxima: ${country.maxStayDays} dias`,
+      `Estadia máxima: ${getStayText(country)}`,
       `Link oficial: ${country.officialUrl}`,
     ].join('\n');
     try {
@@ -74,13 +90,17 @@ export default function DestinationDetail({ country }: { country: Country }) {
             country.id === 'br'
               ? 'Não se aplica'
               : country.passport.minValidityMonths === 0
-              ? 'Válido na estadia'
+              ? (country.passport.details.toLowerCase().includes('rg') || country.passport.details.toLowerCase().includes('identidade'))
+                ? 'RG válido'
+                : 'Válido na estadia'
               : `Mínimo ${country.passport.minValidityMonths} ${country.passport.minValidityMonths === 1 ? 'mês' : 'meses'}`
           }
           description={country.passport.details}
           index={1}
         >
-          <DatePicker minValidityMonths={country.passport.minValidityMonths} />
+          {country.id !== 'br' && country.passport.minValidityMonths > 0 && (
+            <DatePicker minValidityMonths={country.passport.minValidityMonths} />
+          )}
         </RequirementCard>
         <RequirementCard
           icon={Syringe}

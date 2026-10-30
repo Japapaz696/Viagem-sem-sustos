@@ -78,7 +78,15 @@ export default function CompararDestinos() {
                 <tr className="border-b border-[var(--border)]">
                   <td className="px-4 py-3 text-[var(--muted)] font-medium">Passaporte (validade mín.)</td>
                   {selectedCountries.map(c => (
-                    <td key={c.id} className="px-4 py-3 text-center text-[var(--fg-strong)]">{c.id === 'br' ? 'Não se aplica' : c.passport.minValidityMonths === 0 ? 'Válido na estadia' : `${c.passport.minValidityMonths} meses`}</td>
+                    <td key={c.id} className="px-4 py-3 text-center text-[var(--fg-strong)]">
+                      {c.id === 'br'
+                        ? 'Não se aplica'
+                        : c.passport.minValidityMonths === 0
+                        ? (c.passport.details.toLowerCase().includes('rg') || c.passport.details.toLowerCase().includes('identidade'))
+                          ? 'RG válido'
+                          : 'Válido na estadia'
+                        : `${c.passport.minValidityMonths} meses`}
+                    </td>
                   ))}
                 </tr>
                 <tr className="border-b border-[var(--border)]">

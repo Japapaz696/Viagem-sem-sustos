@@ -8,7 +8,7 @@ export default function SettingsPanel() {
   return (
     <div className="space-y-6 max-w-3xl mx-auto">
       <h2 className="text-2xl font-extrabold tracking-tight text-white">Ajustes</h2>
-      
+
       <section className="rounded-3xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl p-6">
         <div className="flex items-center gap-3 mb-4">
           <div className="h-8 w-8 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center"><Shield className="h-4 w-4 text-indigo-400"/></div>

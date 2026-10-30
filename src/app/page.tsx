@@ -85,16 +85,16 @@ export default function Home() {
     <div className="min-h-screen bg-[var(--bg)] text-[var(--fg)] selection:bg-[var(--accent-soft)]">
       <Navbar active={activeTab} onChange={(tab) => { setActiveTab(tab); setSideOpen(false); setSelected(null); }} />
 
-      <main className="md:ml-72 md:pl-8 pt-6 pb-24 md:pb-6 min-h-screen">
+      <main className="md:ml-72 md:pl-8 pt-6 pb-24 md:pb-6 min-h-screen bg-[var(--bg)]">
         {/* Header integrado */}
-        <header className="sticky top-0 z-30 px-6 md:px-10 pt-2 pb-4 flex items-center justify-between gap-4 backdrop-blur-2xl bg-white/75 border-b border-[#E2E8F0]/60 shadow-[0_1px_3px_rgba(37,99,235,0.04)]">
+        <header className="sticky top-0 z-30 px-6 md:px-10 pt-3 pb-4 flex items-center justify-between gap-4 backdrop-blur-2xl bg-[var(--surface)]/85 border-b border-[var(--border)] shadow-[var(--shadow-soft)]">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-[#2563EB]/10 to-[#3B82F6]/5 border border-[#E2E8F0] shadow-sm">
-              <Plane className="h-5 w-5 text-[#2563EB]" aria-hidden="true" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--accent-soft)] to-[var(--accent-soft)] border border-[var(--border)] shadow-sm">
+              <Plane className="h-5 w-5 text-[var(--accent)]" aria-hidden="true" />
             </div>
             <div>
-              <h1 className="text-base font-extrabold tracking-tight leading-tight">ViagemSemSusto</h1>
-              <p className="text-[10px] text-[#94A3B8] font-medium">Seu guia de viagem e visto</p>
+              <h1 className="text-base font-extrabold tracking-tight leading-tight text-[var(--fg-strong)]">ViagemSemSusto</h1>
+              <p className="text-[10px] text-[var(--muted)] font-medium">Seu guia de viagem e visto</p>
             </div>
           </div>
 
@@ -110,7 +110,7 @@ export default function Home() {
 
           <div className="flex items-center gap-3">
             <ThemeToggle />
-            <button type="button" className="hidden md:inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[#64748B] hover:text-[#0F172A] hover:bg-[#F0F6FF] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563EB]/40" aria-label="Perfil">
+            <button type="button" className="hidden md:inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--surface)] border border-[var(--border)] text-[var(--muted)] hover:text-[var(--fg-strong)] hover:bg-[var(--accent-soft)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40" aria-label="Perfil">
               <ShieldCheck className="h-4 w-4" />
             </button>
           </div>
@@ -136,9 +136,9 @@ export default function Home() {
               </div>
 
               <section className="mb-6 max-w-[1400px] mx-auto">
-                <h2 className="flex items-end justify-between mb-6 text-lg font-bold tracking-tight text-[#0F172A]">
-                  <span className="text-[#2563EB]">Os destinos que você precisa comparar primeiro.</span>
-                  <span className="text-xs font-semibold uppercase tracking-wider text-[#94A3B8] bg-[#F0F6FF] px-2 py-1 rounded-full hidden sm:inline-block">
+                <h2 className="flex items-end justify-between mb-6 text-lg font-bold tracking-tight text-[var(--fg-strong)]">
+                  <span className="text-[var(--accent)]">Os destinos que você precisa comparar primeiro.</span>
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)] bg-[var(--accent-soft)] px-2 py-1 rounded-full hidden sm:inline-block">
                     Planejador abaixo
                   </span>
                 </h2>
@@ -146,7 +146,7 @@ export default function Home() {
 
               <motion.div
                 layout
-                className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-start"
               >
                 <AnimatePresence mode="popLayout">
                   {filtered.map((c, i) => (
@@ -163,7 +163,7 @@ export default function Home() {
               </motion.div>
 
               {filtered.length === 0 && (
-                <div className="mt-8 rounded-[2rem] border border-[#E2E8F0] bg-white shadow-[0_4px_20px_rgba(37,99,235,0.06)] p-10 text-center text-[#64748B]">
+                <div className="mt-8 rounded-4xl border border-[var(--border)] bg-[var(--card)] shadow-soft p-10 text-center text-[var(--muted)]">
                   Nenhum destino encontrado para os filtros aplicados.
                 </div>
               )}
@@ -173,7 +173,7 @@ export default function Home() {
           {/* Destinations Tab */}
           {activeTab === 'destinations' && (
             <div className="relative">
-              <div className="rounded-[2rem] overflow-hidden">
+              <div className="rounded-4xl overflow-hidden border border-[var(--border)] shadow-soft">
                 <MapView selected={selected} onSelect={handleSelect} />
               </div>
               <AIAssistant />

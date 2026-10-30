@@ -29,7 +29,7 @@ export default function DestinationCard({
       exit={{ opacity: 0, y: -8, scale: 0.98 }}
       transition={{ type: 'spring', stiffness: 260, damping: 24 }}
       whileHover={{ y: -4 }}
-      className={`group relative overflow-hidden rounded-[1.75rem] border border-white/80 bg-white shadow-[0_4px_20px_rgba(37,99,235,0.06)] hover:shadow-[0_12px_32px_rgba(37,99,235,0.12)] transition-shadow duration-300 ${featured ? 'col-span-2 row-span-2' : ''}`}
+      className={`group relative overflow-hidden rounded-3xl border border-[var(--card-border)] bg-[var(--card)] shadow-soft hover:shadow-soft-lg transition-shadow duration-300 ${featured ? 'col-span-2 row-span-2' : ''}`}
     >
       <button
         type="button"
@@ -44,7 +44,7 @@ export default function DestinationCard({
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             loading="lazy"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-50 via-[#2563EB]/5 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
           {/* Top-left badge */}
           <div className="absolute left-3 top-3 z-10">
             <StatusBadge type={country.visa.type} label={country.visa.label} />
@@ -54,10 +54,10 @@ export default function DestinationCard({
             <div className="flex items-center gap-2 min-w-0">
               <span className="text-2xl leading-none" aria-hidden="true">{country.flag}</span>
               <div className="min-w-0">
-                <h3 className="text-lg font-extrabold text-slate-900 leading-tight group-hover:text-[#2563EB] transition-colors truncate">
+                <h3 className="text-lg font-extrabold text-white leading-tight group-hover:text-[var(--accent)] transition-colors truncate drop-shadow-sm">
                   {country.name}
                 </h3>
-                <p className="text-xs text-slate-500 font-medium leading-tight line-clamp-1">
+                <p className="text-xs text-white/80 font-medium leading-tight line-clamp-1 drop-shadow-sm">
                   {country.maxStayDays ? `${country.maxStayDays} dias máx.` : 'Sem limite'} ·{' '}
                   {country.vaccines.required.length > 0 ? 'Vacina obrigatória' : 'Sem vacina obrigatória'}
                 </p>
@@ -76,7 +76,7 @@ export default function DestinationCard({
           }}
           aria-label={saved ? 'Remover dos salvos' : 'Salvar destino'}
           aria-pressed={saved}
-          className="absolute right-3 top-3 z-20 flex h-9 w-9 items-center justify-center rounded-xl bg-white/90 border border-white/15 shadow-sm backdrop-blur-md text-slate-500 hover:bg-white hover:text-indigo-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+          className="absolute right-3 top-3 z-20 flex h-9 w-9 items-center justify-center rounded-xl bg-white/90 border border-white/30 shadow-sm backdrop-blur-md text-slate-600 hover:bg-white hover:text-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/50 focus-visible:ring-offset-2 transition-colors"
         >
           {saved ? <BookmarkCheck className="h-4 w-4 text-emerald-500" /> : <Bookmark className="h-4 w-4" />}
         </button>

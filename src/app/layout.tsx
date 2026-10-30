@@ -1,6 +1,13 @@
 import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/contexts/ThemeContext';
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
 
 export const metadata: Metadata = {
   title: 'ViagemSemSusto — Seu Guia de Requisitos de Viagem e Visto',
@@ -19,8 +26,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" suppressHydrationWarning>
-      <body>
+    <html lang="pt-BR" suppressHydrationWarning className={inter.variable}>
+      <body className="font-sans">
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

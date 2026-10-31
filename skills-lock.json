@@ -19,6 +19,18 @@
       "skillPath": "skills/designing-user-experience/SKILL.md",
       "computedHash": "78db0278c8f026786c1c4f3152958b41ccdda10cc6fc7f61f214124796da56fc"
     },
+    "fix-security-vulnerabilities-with-strix": {
+      "source": "usestrix/strix",
+      "sourceType": "github",
+      "skillPath": "skills/fix-security-vulnerabilities-with-strix/SKILL.md",
+      "computedHash": "1f91d165671877f77b0c23f34a4596375dc425de388f5b17d2a4742194a8bfb8"
+    },
+    "penetration-testing-with-strix": {
+      "source": "usestrix/strix",
+      "sourceType": "github",
+      "skillPath": "skills/penetration-testing-with-strix/SKILL.md",
+      "computedHash": "4440e56be80c8b9ce31211b0fc8d37a02025f7d4b1d9ba54cc05981d8240ac58"
+    },
     "reviewing-interface-quality": {
       "source": "osmontero/opencode-skills",
       "sourceType": "github",

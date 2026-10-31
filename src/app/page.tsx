@@ -16,7 +16,7 @@ import PlanejarViagem from '@/components/PlanejarViagem';
 import Checklist from '@/components/Checklist';
 import CompararDestinos from '@/components/CompararDestinos';
 import HeroFlightAnimation from '@/components/HeroFlightAnimation';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import BrandLogo from '@/components/BrandLogo';
 import { MenuToggle } from '@/components/Navbar';
 
@@ -36,6 +36,7 @@ function applyFilter(list: Country[], filter: string): Country[] {
 const SAVED_KEY = 'viagem-sem-susto-saved';
 
 export default function Home() {
+  const reduceMotion = useReducedMotion();
   const [selected, setSelected] = useState<Country | null>(null);
   const [sideOpen, setSideOpen] = useState(false);
   const [filter, setFilter] = useState('all');
@@ -113,9 +114,14 @@ export default function Home() {
                 <MenuToggle open={navOpen} onClick={() => setNavOpen((value) => !value)} inverse />
                 <BrandLogo inverse />
               </div>
-              <h1 className="max-w-3xl text-3xl font-bold tracking-[-0.035em] sm:text-4xl md:text-[44px] md:leading-[1.12]">
+              <motion.h1
+                initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+                className="font-display max-w-3xl text-3xl font-bold tracking-[-0.04em] sm:text-4xl md:text-[46px] md:leading-[1.1]"
+              >
                 Encontre seu próximo destino com tranquilidade
-              </h1>
+              </motion.h1>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-sky-100 sm:text-base">
                 Pesquise um país e confira o que preparar antes de viajar.
               </p>
@@ -145,7 +151,7 @@ export default function Home() {
               <div className="flex-1 min-w-0">
                 <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
                   <div>
-                    <h2 className="text-xl font-bold tracking-tight text-[var(--fg-strong)]">Destinos para explorar</h2>
+                    <h2 className="font-display text-xl font-bold tracking-tight text-[var(--fg-strong)]">Destinos para explorar</h2>
                     <p className="mt-1 text-sm text-[var(--muted)]">Informações para começar a planejar com segurança.</p>
                   </div>
                   <span className="pb-0.5 text-sm text-[var(--muted)]">{filtered.length} destinos</span>
@@ -203,6 +209,7 @@ export default function Home() {
               onSelect={handleSelect}
               saved={saved}
               onToggleSave={toggleSave}
+              onExplore={() => { setActiveTab('explore'); setSideOpen(false); setSelected(null); setQuery(''); }}
             />
           )}
 

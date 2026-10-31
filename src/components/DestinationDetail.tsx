@@ -11,9 +11,21 @@ import { getDestinationImage } from '@/utils/images';
 import type { Country } from '@/types/country';
 import { getPassportRule } from '@/utils/passportRules';
 
-export default function DestinationDetail({ country }: { country: Country }) {
+export default function DestinationDetail({ country, compact = false, capitalName }: { country: Country; compact?: boolean; capitalName?: string }) {
   const [copied, setCopied] = useState(false);
   const hasRequiredVaccines = country.vaccines.required.length > 0;
+  const passportValue = country.id === 'br'
+    ? 'Não se aplica'
+    : country.passport.minValidityMonths === 0
+      ? (country.passport.details.toLowerCase().includes('rg') || country.passport.details.toLowerCase().includes('identidade')) ? 'RG válido' : 'Válido na estadia'
+      : `Mínimo ${country.passport.minValidityMonths} ${country.passport.minValidityMonths === 1 ? 'mês' : 'meses'}`;
+  const vaccineDescription = hasRequiredVaccines
+    ? country.vaccines.required.join(', ')
+    : country.vaccines.recommended.length > 0
+      ? `Recomendadas: ${country.vaccines.recommended.join(', ')}`
+      : 'Nenhuma recomendação específica.';
+  const stayValue = country.id === 'br' ? 'Não se aplica' : country.maxStayDays === 0 ? 'Não definido' : `${country.maxStayDays} dias`;
+  const passportDateCheckAvailable = !['origin', 'identity-document'].includes(getPassportRule(country.id, country.passport.minValidityMonths, country.passport.details));
 
   function getPassportText(c: Country): string {
     if (c.id === 'br') return 'Não se aplica (país de origem)';
@@ -48,6 +60,65 @@ export default function DestinationDetail({ country }: { country: Country }) {
     } catch {
       setCopied(false);
     }
+  }
+
+  if (compact) {
+    const requirements = [
+      { icon: ShieldCheck, title: 'Visto', value: country.visa.label, description: country.visa.description },
+      { icon: BookOpen, title: 'Passaporte', value: passportValue, description: country.passport.details },
+      { icon: Syringe, title: 'Vacinas', value: hasRequiredVaccines ? 'Obrigatórias' : 'Nenhuma obrigatória', description: vaccineDescription },
+      { icon: Calendar, title: 'Estadia máxima', value: stayValue, description: country.id === 'br' ? 'Você já está no país de origem.' : 'Tempo máximo de permanência para turismo.' },
+    ];
+
+    return (
+      <motion.section
+        key={country.id}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.22 }}
+        className="w-full"
+        aria-labelledby="detail-title"
+      >
+        <div className="flex items-center gap-3">
+          <img src={getDestinationImage(country.id)} alt={`Paisagem de ${country.name}`} className="h-[72px] w-[86px] shrink-0 rounded-lg object-cover" loading="lazy" />
+          <div className="min-w-0">
+            <h2 id="detail-title" className="font-display truncate text-xl font-bold text-[var(--fg-strong)]">{country.flag} {country.name}</h2>
+            {capitalName && <p className="mt-0.5 text-sm text-[var(--muted)]">Capital: {capitalName}</p>}
+          </div>
+        </div>
+
+        <dl className="mt-4 divide-y divide-[var(--border)] border-y border-[var(--border)]">
+          {requirements.map(({ icon: Icon, title, value, description }) => (
+            <div key={title} className="grid grid-cols-[minmax(94px,0.8fr)_minmax(0,1.4fr)] gap-3 py-3">
+              <dt className="flex items-start gap-2 text-sm font-medium text-[var(--muted)]">
+                <Icon className="mt-0.5 h-4 w-4 shrink-0 text-[var(--accent)]" aria-hidden="true" />
+                <span>{title}</span>
+              </dt>
+              <dd className="min-w-0">
+                <p className="text-sm font-semibold leading-5 text-[var(--fg-strong)]">{value}</p>
+                <p className="mt-0.5 text-xs leading-[1.45] text-[var(--muted)]">{description}</p>
+                {title === 'Passaporte' && passportDateCheckAvailable && (
+                  <div className="mt-2"><DatePicker countryId={country.id} minValidityMonths={country.passport.minValidityMonths} passportDetails={country.passport.details} /></div>
+                )}
+              </dd>
+            </div>
+          ))}
+        </dl>
+
+        <div className="mt-4 flex flex-col gap-2">
+          <a href={country.officialUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-btn bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/60">
+            <ExternalLink className="h-4 w-4" aria-hidden="true" /> Site oficial da imigração
+          </a>
+          <div className="grid grid-cols-2 gap-2">
+            <button type="button" onClick={handleCopyChecklist} className="inline-flex min-h-10 items-center justify-center gap-2 rounded-btn border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-xs font-medium text-[var(--fg-strong)] hover:bg-[var(--accent-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/60">
+              {copied ? <Check className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4" />}{copied ? 'Copiado!' : 'Copiar checklist'}
+            </button>
+            <div className="flex min-w-0 justify-center"><ShareButton country={country} /></div>
+          </div>
+          <p className="text-center text-[11px] leading-4 text-[var(--muted)]">Atualizado em {country.lastUpdated}. Confirme os requisitos em fontes oficiais antes de viajar.</p>
+        </div>
+      </motion.section>
+    );
   }
 
   return (

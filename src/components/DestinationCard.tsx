@@ -83,7 +83,7 @@ export default function DestinationCard({
           }}
           aria-label={saved ? 'Remover dos salvos' : 'Salvar destino'}
           aria-pressed={saved}
-          className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-btn bg-white/90 border border-[var(--card-border)] text-[var(--muted)] hover:text-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] transition-colors"
+          className="absolute right-3 top-3 z-20 flex h-9 w-9 items-center justify-center rounded-btn border border-[var(--card-border)] bg-[var(--surface)] text-[var(--muted)] transition-colors hover:text-[var(--accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
         >
           {saved ? <BookmarkCheck className="h-4 w-4 text-emerald-500" /> : <Bookmark className="h-4 w-4" />}
         </button>

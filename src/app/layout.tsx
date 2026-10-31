@@ -1,12 +1,18 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { DM_Sans, Manrope } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 
-const inter = Inter({
+const dmSans = DM_Sans({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-inter',
+  variable: '--font-dm-sans',
+});
+
+const manrope = Manrope({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-manrope',
 });
 
 export const metadata: Metadata = {
@@ -26,7 +32,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" suppressHydrationWarning className={inter.variable}>
+    <html lang="pt-BR" suppressHydrationWarning className={`${dmSans.variable} ${manrope.variable}`}>
       <body className="font-sans">
         <ThemeProvider>{children}</ThemeProvider>
       </body>

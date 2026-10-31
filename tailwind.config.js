@@ -26,7 +26,8 @@ module.exports = {
         btn: '0.5rem',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-manrope)', 'var(--font-dm-sans)', 'sans-serif'],
       },
     },
   },

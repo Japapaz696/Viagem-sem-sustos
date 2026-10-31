@@ -161,7 +161,7 @@ export default function SettingsPanel({ onClearSaved, savedCount, syncMessage }:
         </div>
       </section>
 
-      <p className="text-xs leading-5 text-[var(--muted-soft)]">Os requisitos mostrados atualmente usam dados de viagem para passaporte brasileiro. Sempre confira as fontes oficiais antes de embarcar.</p>
+      <p className="text-xs leading-5 text-[var(--muted-soft)]">Os requisitos mostrados usam como referência turismo de curta duração com passaporte brasileiro. Trabalho, estudo, residência, trânsito e outros documentos podem ter regras diferentes. Confira as fontes oficiais antes de embarcar.</p>
     </div>
   );
 }

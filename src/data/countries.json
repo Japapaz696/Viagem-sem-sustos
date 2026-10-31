@@ -89,7 +89,7 @@
     "visa": {
       "type": "exempt",
       "label": "Isento de visto",
-      "description": "Brasileiros podem entrar sem visto por até 90 dias em período de 180 dias (Schengen).",
+      "description": "Brasileiros podem entrar sem visto por até 90 dias em período de 180 dias (Schengen). Na conferência de 31/10/2026, o ETIAS ainda não estava em operação; confirme o status oficial antes da viagem.",
       "badgeColor": "bg-green-100 text-green-700"
     },
     "passport": {
@@ -105,12 +105,13 @@
     },
     "maxStayDays": 90,
     "officialUrl": "https://www.gov.pt/guias/entrar-e-sair-de-portugal",
-    "lastUpdated": "2026-10-30",
+    "lastUpdated": "2026-10-31",
     "sources": {
       "visa": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex:02012A0921%2802%29-20221001",
       "passport": "https://europa.eu/youreurope/citizens/travel/entry-exit/non-eu-nationals/index_en.htm",
       "stay": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex:02012A0921%2802%29-20221001",
-      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/portugal"
+      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/portugal",
+      "electronicAuthorization": "https://travel-europe.europa.eu/pt/etias/faq"
     }
   },
   {
@@ -131,7 +132,7 @@
     },
     "passport": {
       "minValidityMonths": 0,
-      "details": "Pode entrar com RG válido; passaporte não é obrigatório."
+      "details": "Para turismo, pode usar RG emitido há menos de 10 anos, em bom estado e com foto que identifique você; passaporte também é aceito. Para trabalho, estudo ou residência, consulte as regras específicas e use passaporte."
     },
     "vaccines": {
       "required": [],
@@ -142,7 +143,7 @@
     },
     "maxStayDays": 90,
     "officialUrl": "https://www.argentina.gob.ar/tema/extranjeros",
-    "lastUpdated": "2026-10-28",
+    "lastUpdated": "2026-10-31",
     "sources": {
       "visa": "https://www.argentina.gob.ar/tema/extranjeros",
       "passport": "https://www.argentina.gob.ar/migraciones/documentacion-para-ingresar-al-pais-como-turista",
@@ -164,7 +165,7 @@
     "visa": {
       "type": "exempt",
       "label": "Isento de visto",
-      "description": "Brasileiros isentos de visto por até 90 dias em período de 180 dias (Schengen).",
+      "description": "Brasileiros podem entrar sem visto por até 90 dias em período de 180 dias (Schengen). Na conferência de 31/10/2026, o ETIAS ainda não estava em operação; confirme o status oficial antes da viagem.",
       "badgeColor": "bg-green-100 text-green-700"
     },
     "passport": {
@@ -180,12 +181,13 @@
     },
     "maxStayDays": 90,
     "officialUrl": "https://www.exteriores.gob.es/Consulados/saopaulo/es/ServiciosConsulares/Documents/Requisitos%20de%20entrada%20para%20turistas.pdf",
-    "lastUpdated": "2026-10-30",
+    "lastUpdated": "2026-10-31",
     "sources": {
       "visa": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex:02012A0921%2802%29-20221001",
       "passport": "https://europa.eu/youreurope/citizens/travel/entry-exit/non-eu-nationals/index_en.htm",
       "stay": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex:02012A0921%2802%29-20221001",
-      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/spain"
+      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/spain",
+      "electronicAuthorization": "https://travel-europe.europa.eu/pt/etias/faq"
     }
   },
   {
@@ -242,7 +244,7 @@
     "visa": {
       "type": "exempt",
       "label": "Isento de visto",
-      "description": "Brasileiros isentos de visto por até 90 dias em período de 180 dias (Schengen).",
+      "description": "Brasileiros podem entrar sem visto por até 90 dias em período de 180 dias (Schengen). Na conferência de 31/10/2026, o ETIAS ainda não estava em operação; confirme o status oficial antes da viagem.",
       "badgeColor": "bg-green-100 text-green-700"
     },
     "passport": {
@@ -258,12 +260,13 @@
     },
     "maxStayDays": 90,
     "officialUrl": "https://france-visas.gouv.fr/en/bresil",
-    "lastUpdated": "2026-10-30",
+    "lastUpdated": "2026-10-31",
     "sources": {
       "visa": "https://france-visas.gouv.fr/en/bresil",
       "passport": "https://europa.eu/youreurope/citizens/travel/entry-exit/non-eu-nationals/index_en.htm",
       "stay": "https://france-visas.gouv.fr/en/bresil",
-      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/france"
+      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/france",
+      "electronicAuthorization": "https://travel-europe.europa.eu/pt/etias/faq"
     }
   },
   {
@@ -284,7 +287,7 @@
     },
     "passport": {
       "minValidityMonths": 0,
-      "details": "Pode entrar com RG válido; passaporte não é obrigatório."
+      "details": "Para turismo, pode usar RG emitido há menos de 10 anos, em bom estado e com foto que identifique você; passaporte também é aceito. Para trabalho, estudo ou residência, consulte as regras específicas e use passaporte."
     },
     "vaccines": {
       "required": [],
@@ -295,7 +298,7 @@
     },
     "maxStayDays": 90,
     "officialUrl": "https://www.consulado.gob.cl/informacion-sobre-visas-para-ingresar-a-chile",
-    "lastUpdated": "2026-10-28",
+    "lastUpdated": "2026-10-31",
     "sources": {
       "visa": "https://www.consulado.gob.cl/informacion-sobre-visas-para-ingresar-a-chile",
       "passport": "https://www.gov.br/pf/pt-br/assuntos/passaporte/ajuda/duvidas_/inicio/mercosul",
@@ -356,7 +359,7 @@
     "visa": {
       "type": "exempt",
       "label": "Isento de visto",
-      "description": "Brasileiros isentos de visto por até 90 dias em período de 180 dias (Schengen).",
+      "description": "Brasileiros podem entrar sem visto por até 90 dias em período de 180 dias (Schengen). Na conferência de 31/10/2026, o ETIAS ainda não estava em operação; confirme o status oficial antes da viagem.",
       "badgeColor": "bg-green-100 text-green-700"
     },
     "passport": {
@@ -372,12 +375,13 @@
     },
     "maxStayDays": 90,
     "officialUrl": "https://conssanpaolo.esteri.it/pt/servizi-consolari-e-visti/servizi-per-il-cittadino-straniero/visti/",
-    "lastUpdated": "2026-10-30",
+    "lastUpdated": "2026-10-31",
     "sources": {
       "visa": "https://conssanpaolo.esteri.it/pt/servizi-consolari-e-visti/servizi-per-il-cittadino-straniero/visti/",
       "passport": "https://europa.eu/youreurope/citizens/travel/entry-exit/non-eu-nationals/index_en.htm",
       "stay": "https://conssanpaolo.esteri.it/pt/servizi-consolari-e-visti/servizi-per-il-cittadino-straniero/visti/",
-      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/italy"
+      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/italy",
+      "electronicAuthorization": "https://travel-europe.europa.eu/pt/etias/faq"
     }
   },
   {
@@ -402,7 +406,9 @@
       "details": "Passaporte válido por pelo menos 6 meses."
     },
     "vaccines": {
-      "required": [],
+      "required": [
+        "Febre amarela: certificado internacional exigido para quem chega de ou transitou por país/área de risco; o Brasil está na lista oficial."
+      ],
       "recommended": [
         "Hepatite A",
         "Febre tifoide",
@@ -412,12 +418,13 @@
     },
     "maxStayDays": 90,
     "officialUrl": "https://brasilia.thaiembassy.org/en/content/summary-the-revision-of-thailand-s-visa-exemption",
-    "lastUpdated": "2026-10-30",
+    "lastUpdated": "2026-10-31",
     "sources": {
       "visa": "https://brasilia.thaiembassy.org/en/content/summary-the-revision-of-thailand-s-visa-exemption",
       "passport": "https://canberra.thaiembassy.org/en/page/entry-to-thailand",
       "stay": "https://brasilia.thaiembassy.org/th/content/thailand-digital-arrival-card-tdac?menu=670e09bcb847bc1ded0c0383&page=670e233f6b960d2dd52ef8a3",
-      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/thailand"
+      "vaccines": "https://www.mfa.go.th/en/publicservice/5d5bcc2615e39c306000a30d",
+      "vaccinesHealth": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/thailand"
     }
   },
   {
@@ -518,12 +525,12 @@
     },
     "passport": {
       "minValidityMonths": 0,
-      "details": "Pode entrar com RG válido; passaporte não é obrigatório."
+      "details": "Para turismo, pode usar RG emitido há menos de 10 anos, em bom estado e com foto que identifique você; passaporte também é aceito. Para trabalho, estudo ou residência, consulte as regras específicas e use passaporte."
     },
     "vaccines": {
       "required": [],
       "recommended": [
-        "Febre amarela (recomendada para áreas de risco; regras locais podem exigir comprovante)",
+        "Febre amarela (recomendada para zonas de risco; o comprovante pode ser verificado em controles locais dessas zonas)",
         "Hepatite A",
         "Febre tifoide",
         "COVID-19"
@@ -531,12 +538,13 @@
     },
     "maxStayDays": 180,
     "officialUrl": "https://cancilleria.gov.co/sites/default/files/Normograma/docs/resolucion_minrelaciones_5488_2022.htm",
-    "lastUpdated": "2026-10-30",
+    "lastUpdated": "2026-10-31",
     "sources": {
       "visa": "https://cancilleria.gov.co/sites/default/files/Normograma/docs/resolucion_minrelaciones_5488_2022.htm",
       "passport": "https://www.gov.br/pf/pt-br/assuntos/passaporte/ajuda/duvidas_/inicio/mercosul",
       "stay": "https://www.migracioncolombia.gov.co/tramites-y-servicios/tramites-generales/prorroga/permiso-temporal-de-permanencia-ptp-/-prorroga",
-      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/colombia"
+      "vaccines": "https://www2.minsalud.gov.co/salud/publica/PET/Paginas/Fiebre-amarilla.aspx",
+      "vaccinesHealth": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/colombia"
     }
   },
   {
@@ -554,7 +562,7 @@
     "visa": {
       "type": "exempt",
       "label": "Isento de visto",
-      "description": "Brasileiros isentos de visto por até 90 dias em período de 180 dias (Schengen).",
+      "description": "Brasileiros podem entrar sem visto por até 90 dias em período de 180 dias (Schengen). Na conferência de 31/10/2026, o ETIAS ainda não estava em operação; confirme o status oficial antes da viagem.",
       "badgeColor": "bg-green-100 text-green-700"
     },
     "passport": {
@@ -570,12 +578,13 @@
     },
     "maxStayDays": 90,
     "officialUrl": "https://www.auswaertiges-amt.de/en/visa-service/231148-231148",
-    "lastUpdated": "2026-10-30",
+    "lastUpdated": "2026-10-31",
     "sources": {
       "visa": "https://www.auswaertiges-amt.de/en/visa-service/231148-231148",
       "passport": "https://europa.eu/youreurope/citizens/travel/entry-exit/non-eu-nationals/index_en.htm",
       "stay": "https://www.auswaertiges-amt.de/en/visa-service/231148-231148",
-      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/germany"
+      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/germany",
+      "electronicAuthorization": "https://travel-europe.europa.eu/pt/etias/faq"
     }
   },
   {
@@ -596,7 +605,7 @@
     },
     "passport": {
       "minValidityMonths": 0,
-      "details": "Pode entrar com RG válido; passaporte não é obrigatório."
+      "details": "Para turismo, pode usar RG emitido há menos de 10 anos, em bom estado e com foto que identifique você; passaporte também é aceito. Para trabalho, estudo ou residência, consulte as regras específicas e use passaporte."
     },
     "vaccines": {
       "required": [],
@@ -607,7 +616,7 @@
     },
     "maxStayDays": 90,
     "officialUrl": "https://www.gub.uy/ministerio-interior/comunicacion/publicaciones/regimen-visas-admision",
-    "lastUpdated": "2026-10-28",
+    "lastUpdated": "2026-10-31",
     "sources": {
       "visa": "https://www.gub.uy/ministerio-interior/comunicacion/publicaciones/regimen-visas-admision",
       "passport": "https://www.gov.br/pf/pt-br/assuntos/passaporte/ajuda/duvidas_/inicio/mercosul",

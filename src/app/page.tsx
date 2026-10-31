@@ -88,7 +88,8 @@ export default function Home() {
       setSyncMessage('Sincronizando destinos salvos…');
       const { data, error } = await supabaseClient
         .from('saved_destinations')
-        .select('country_id');
+        .select('country_id')
+        .eq('user_id', currentUser.id);
       if (error) throw error;
 
       const validIds = new Set(countries.map((country) => country.id));
@@ -302,7 +303,7 @@ export default function Home() {
                 )}
 
                 <div className="mt-6 rounded-card border border-[var(--border)] bg-[var(--surface-muted)] p-3 text-xs text-[var(--muted)]">
-                  <p>⚠️ Requisitos podem mudar. Confirme em fontes oficiais (consulados, embaixadas, IATA) antes de viajar.</p>
+                  <p>Resumo para turismo de curta duração com passaporte brasileiro. Regras podem mudar e outras finalidades ou documentos exigem consulta específica; confirme nas fontes oficiais antes de viajar.</p>
                 </div>
               </div>
 

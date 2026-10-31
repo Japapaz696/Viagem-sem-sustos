@@ -25,6 +25,8 @@ export interface Country {
     passport: string | null;
     stay: string | null;
     vaccines: string | null;
+    electronicAuthorization?: string | null;
+    vaccinesHealth?: string | null;
   };
   lastUpdated: string;
 }

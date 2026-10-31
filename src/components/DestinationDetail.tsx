@@ -29,7 +29,9 @@ export default function DestinationDetail({ country, compact = false, capitalNam
     { key: 'visa', label: 'Visto e autorização', url: country.sources.visa },
     { key: 'passport', label: 'Passaporte e documentos', url: country.sources.passport },
     { key: 'stay', label: 'Permanência autorizada', url: country.sources.stay },
-    { key: 'vaccines', label: 'Saúde e vacinas (CDC)', url: country.sources.vaccines },
+    { key: 'vaccines', label: 'Saúde e vacinas', url: country.sources.vaccines },
+    { key: 'vaccinesHealth', label: 'Recomendações de vacinas (CDC)', url: country.sources.vaccinesHealth },
+    { key: 'electronicAuthorization', label: 'Autorização ETIAS (União Europeia)', url: country.sources.electronicAuthorization },
   ].filter((item) => item.url);
 
   const sourcesBlock = (
@@ -100,7 +102,7 @@ export default function DestinationDetail({ country, compact = false, capitalNam
             <ExternalLink className="h-4 w-4" aria-hidden="true" /> Abrir página oficial principal
           </a>
           <div className="flex min-w-0 justify-center"><ShareButton country={country} /></div>
-          <p className="text-center text-[11px] leading-4 text-[var(--muted)]">Atualizado em {country.lastUpdated}. Confirme os requisitos em fontes oficiais antes de viajar.</p>
+          <p className="text-center text-[11px] leading-4 text-[var(--muted)]">Resumo para turismo de curta duração com passaporte brasileiro. Atualizado em {country.lastUpdated}; outras finalidades e documentos podem alterar os requisitos. Confirme nas fontes oficiais.</p>
         </div>
       </motion.section>
     );
@@ -210,7 +212,7 @@ export default function DestinationDetail({ country, compact = false, capitalNam
           <ShareButton country={country} />
         </div>
         <p className="text-xs text-[var(--muted)]">Última atualização: {country.lastUpdated}</p>
-      <p className="text-xs text-[var(--muted-soft)] mt-1">⚠️ Requisitos podem mudar. Confirme em fontes oficiais antes de viajar.</p>
+      <p className="text-xs text-[var(--muted-soft)] mt-1">Resumo para turismo de curta duração com passaporte brasileiro. Outras finalidades e documentos podem alterar os requisitos; confirme nas fontes oficiais antes de viajar.</p>
       </div>
     </motion.section>
   );

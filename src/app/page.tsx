@@ -12,9 +12,6 @@ import SideSheet from '@/components/SideSheet';
 import DestinationsExplorer from '@/components/DestinationsExplorer';
 import SettingsPanel from '@/components/SettingsPanel';
 import SavedPanel from '@/components/SavedPanel';
-import PlanejarViagem from '@/components/PlanejarViagem';
-import Checklist from '@/components/Checklist';
-import CompararDestinos from '@/components/CompararDestinos';
 import HeroFlightAnimation from '@/components/HeroFlightAnimation';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import BrandLogo from '@/components/BrandLogo';
@@ -22,6 +19,7 @@ import { MenuToggle } from '@/components/Navbar';
 
 const countries = countriesData as Country[];
 const SOUTH_AMERICA = new Set(['ar', 'cl', 'co', 'uy', 'br']);
+const TAB_IDS = new Set(['explore', 'destinations', 'saved', 'settings']);
 
 function applyFilter(list: Country[], filter: string): Country[] {
   switch (filter) {
@@ -48,7 +46,11 @@ export default function Home() {
   useEffect(() => {
     try {
       const raw = localStorage.getItem(SAVED_KEY);
-      if (raw) setSaved(new Set(JSON.parse(raw)));
+      if (raw) {
+        // localStorage is browser-only; load it after hydration to avoid mismatching the server HTML.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setSaved(new Set(JSON.parse(raw)));
+      }
     } catch { /* ignore */ }
   }, []);
 
@@ -66,6 +68,31 @@ export default function Home() {
   }, [filter, query]);
 
   const savedCountries = useMemo(() => countries.filter((c) => saved.has(c.id)), [saved]);
+
+  useEffect(() => {
+    const syncTabFromUrl = () => {
+      const tab = new URLSearchParams(window.location.search).get('tab');
+      if (tab && TAB_IDS.has(tab)) setActiveTab(tab);
+      else setActiveTab('explore');
+    };
+    syncTabFromUrl();
+    window.addEventListener('popstate', syncTabFromUrl);
+    return () => window.removeEventListener('popstate', syncTabFromUrl);
+  }, []);
+
+  function changeTab(tab: string) {
+    if (!TAB_IDS.has(tab)) return;
+    setActiveTab(tab);
+    setSideOpen(false);
+    setSelected(null);
+    setQuery('');
+    setNavOpen(false);
+
+    const url = new URL(window.location.href);
+    if (tab === 'explore') url.searchParams.delete('tab');
+    else url.searchParams.set('tab', tab);
+    window.history.pushState({ tab }, '', `${url.pathname}${url.search}${url.hash}`);
+  }
 
   function handleSelect(country: Country) {
     setSelected(country);
@@ -96,9 +123,10 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--fg)] selection:bg-[var(--accent-soft)] md:flex">
-      <Navbar active={activeTab} open={navOpen} onClose={() => setNavOpen(false)} onChange={(tab) => { setActiveTab(tab); setSideOpen(false); setSelected(null); setQuery(''); }} />
+      <a href="#main-content" className="sr-only fixed left-3 top-3 z-[100] rounded-md bg-[var(--surface)] px-4 py-3 font-semibold text-[var(--fg-strong)] shadow-lg focus:not-sr-only focus:outline-none focus:ring-2 focus:ring-[var(--accent)]">Pular para o conteúdo</a>
+      <Navbar active={activeTab} open={navOpen} onClose={() => setNavOpen(false)} onChange={changeTab} />
 
-      <main className="min-h-screen min-w-0 flex-1 bg-[var(--bg)] pb-24 md:pb-8">
+      <main id="main-content" tabIndex={-1} className="min-h-screen min-w-0 flex-1 bg-[var(--bg)] pb-24 outline-none md:pb-8">
         {activeTab !== 'explore' && <header className="sticky top-0 z-30 flex h-[68px] items-center justify-between gap-4 border-b border-[var(--border)] bg-[var(--surface)] px-4 md:px-8">
           <div className="flex items-center gap-3">
             <MenuToggle open={navOpen} onClick={() => setNavOpen((value) => !value)} />
@@ -209,29 +237,15 @@ export default function Home() {
               onSelect={handleSelect}
               saved={saved}
               onToggleSave={toggleSave}
-              onExplore={() => { setActiveTab('explore'); setSideOpen(false); setSelected(null); setQuery(''); }}
+              onExplore={() => changeTab('explore')}
             />
           )}
 
           {/* Settings Tab */}
           {activeTab === 'settings' && (
-            <SettingsPanel />
+            <SettingsPanel onClearSaved={() => setSaved(new Set())} savedCount={saved.size} />
           )}
 
-          {/* Planejar Tab */}
-          {activeTab === 'planejar' && (
-            <PlanejarViagem />
-          )}
-
-          {/* Checklist Tab */}
-          {activeTab === 'checklist' && (
-            <Checklist />
-          )}
-
-          {/* Comparar Tab */}
-          {activeTab === 'comparar' && (
-            <CompararDestinos />
-          )}
         </div>
       </main>
 

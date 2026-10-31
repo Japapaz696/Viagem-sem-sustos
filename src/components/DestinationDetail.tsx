@@ -1,8 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { BookOpen, Calendar, Check, Copy, ExternalLink, FileCheck, Syringe, ShieldCheck } from 'lucide-react';
-import { useState } from 'react';
+import Image from 'next/image';
+import { BookOpen, Calendar, ExternalLink, Syringe, ShieldCheck } from 'lucide-react';
 import StatusBadge from './StatusBadge';
 import RequirementCard from './RequirementCard';
 import DatePicker from './DatePicker';
@@ -12,7 +12,6 @@ import type { Country } from '@/types/country';
 import { getPassportRule } from '@/utils/passportRules';
 
 export default function DestinationDetail({ country, compact = false, capitalName }: { country: Country; compact?: boolean; capitalName?: string }) {
-  const [copied, setCopied] = useState(false);
   const hasRequiredVaccines = country.vaccines.required.length > 0;
   const passportValue = country.id === 'br'
     ? 'Não se aplica'
@@ -26,41 +25,30 @@ export default function DestinationDetail({ country, compact = false, capitalNam
       : 'Nenhuma recomendação específica.';
   const stayValue = country.id === 'br' ? 'Não se aplica' : country.maxStayDays === 0 ? 'Não definido' : `${country.maxStayDays} dias`;
   const passportDateCheckAvailable = !['origin', 'identity-document'].includes(getPassportRule(country.id, country.passport.minValidityMonths, country.passport.details));
+  const sourceItems = [
+    { key: 'visa', label: 'Visto e autorização', url: country.sources.visa },
+    { key: 'passport', label: 'Passaporte e documentos', url: country.sources.passport },
+    { key: 'stay', label: 'Permanência autorizada', url: country.sources.stay },
+    { key: 'vaccines', label: 'Saúde e vacinas (CDC)', url: country.sources.vaccines },
+  ].filter((item) => item.url);
 
-  function getPassportText(c: Country): string {
-    if (c.id === 'br') return 'Não se aplica (país de origem)';
-    if (c.passport.minValidityMonths === 0) {
-      const details = c.passport.details.toLowerCase();
-      if (details.includes('rg') || details.includes('identidade')) return 'RG válido; passaporte não obrigatório';
-      return 'Passaporte válido durante toda a estadia';
-    }
-    return `Mínimo ${c.passport.minValidityMonths} ${c.passport.minValidityMonths === 1 ? 'mês' : 'meses'}`;
-  }
-
-  function getStayText(c: Country): string {
-    if (c.id === 'br') return 'Não se aplica (país de origem)';
-    if (c.maxStayDays === 0) return 'Sem limite definido';
-    return `${c.maxStayDays} dias`;
-  }
-
-  async function handleCopyChecklist() {
-    const text = [
-      `Requisitos de viagem para ${country.name}`,
-      `Visto: ${country.visa.label} — ${country.visa.description}`,
-      `Passaporte: ${getPassportText(country)}.`,
-      `Vacinas obrigatórias: ${country.vaccines.required.join(', ') || 'Nenhuma'}`,
-      `Vacinas recomendadas: ${country.vaccines.recommended.join(', ') || 'Nenhuma'}`,
-      `Estadia máxima: ${getStayText(country)}`,
-      `Link oficial: ${country.officialUrl}`,
-    ].join('\n');
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      setCopied(false);
-    }
-  }
+  const sourcesBlock = (
+    <details className="rounded-lg border border-[var(--border)] bg-[var(--surface)]">
+      <summary className="flex min-h-11 cursor-pointer items-center rounded-lg px-3 text-sm font-semibold text-[var(--fg-strong)] outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">
+        Consultar fontes por requisito
+      </summary>
+      <ul className="border-t border-[var(--border)] px-3 py-1">
+        {sourceItems.map((item) => (
+          <li key={item.key}>
+            <a href={item.url!} target="_blank" rel="noopener noreferrer" aria-label={`Consultar fonte de ${item.label.toLowerCase()} para ${country.name}`} className="flex min-h-11 items-center justify-between gap-3 border-b border-[var(--border)] py-2 text-xs font-medium text-[var(--accent)] last:border-0 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">
+              <span>{item.label}</span>
+              <ExternalLink className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </details>
+  );
 
   if (compact) {
     const requirements = [
@@ -80,7 +68,7 @@ export default function DestinationDetail({ country, compact = false, capitalNam
         aria-labelledby="detail-title"
       >
         <div className="flex items-center gap-3">
-          <img src={getDestinationImage(country.id)} alt={`Paisagem de ${country.name}`} className="h-[72px] w-[86px] shrink-0 rounded-lg object-cover" loading="lazy" />
+          <Image src={getDestinationImage(country.id)} alt={`Paisagem de ${country.name}`} width={172} height={144} sizes="86px" className="h-[72px] w-[86px] shrink-0 rounded-lg object-cover" loading="lazy" />
           <div className="min-w-0">
             <h2 id="detail-title" className="font-display truncate text-xl font-bold text-[var(--fg-strong)]">{country.flag} {country.name}</h2>
             {capitalName && <p className="mt-0.5 text-sm text-[var(--muted)]">Capital: {capitalName}</p>}
@@ -105,16 +93,13 @@ export default function DestinationDetail({ country, compact = false, capitalNam
           ))}
         </dl>
 
+        <div className="mt-3">{sourcesBlock}</div>
+
         <div className="mt-4 flex flex-col gap-2">
           <a href={country.officialUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-btn bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/60">
-            <ExternalLink className="h-4 w-4" aria-hidden="true" /> Site oficial da imigração
+            <ExternalLink className="h-4 w-4" aria-hidden="true" /> Abrir página oficial principal
           </a>
-          <div className="grid grid-cols-2 gap-2">
-            <button type="button" onClick={handleCopyChecklist} className="inline-flex min-h-10 items-center justify-center gap-2 rounded-btn border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-xs font-medium text-[var(--fg-strong)] hover:bg-[var(--accent-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/60">
-              {copied ? <Check className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4" />}{copied ? 'Copiado!' : 'Copiar checklist'}
-            </button>
-            <div className="flex min-w-0 justify-center"><ShareButton country={country} /></div>
-          </div>
+          <div className="flex min-w-0 justify-center"><ShareButton country={country} /></div>
           <p className="text-center text-[11px] leading-4 text-[var(--muted)]">Atualizado em {country.lastUpdated}. Confirme os requisitos em fontes oficiais antes de viajar.</p>
         </div>
       </motion.section>
@@ -130,11 +115,13 @@ export default function DestinationDetail({ country, compact = false, capitalNam
       className="w-full"
       aria-labelledby="detail-title"
     >
-      <div className="relative mb-4 overflow-hidden rounded-card">
-        <img
+      <div className="relative mb-4 h-40 overflow-hidden rounded-card">
+        <Image
           src={getDestinationImage(country.id)}
           alt={`Paisagem de ${country.name}`}
-          className="h-40 w-full object-cover"
+          fill
+          sizes="(max-width: 1023px) 100vw, 320px"
+          className="object-cover"
           loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
@@ -207,6 +194,8 @@ export default function DestinationDetail({ country, compact = false, capitalNam
         />
       </div>
 
+      <div className="mt-4">{sourcesBlock}</div>
+
       <div className="mt-6 flex flex-col items-center gap-3">
         <a
           href={country.officialUrl}
@@ -215,17 +204,9 @@ export default function DestinationDetail({ country, compact = false, capitalNam
           className="inline-flex w-full items-center justify-center gap-2 rounded-btn bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-white hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/60"
         >
           <ExternalLink className="h-5 w-5" aria-hidden="true" />
-          Site oficial da imigração
+          Consultar fonte oficial
         </a>
         <div className="flex flex-wrap items-center justify-center gap-3">
-          <button
-            type="button"
-            onClick={handleCopyChecklist}
-            className="inline-flex items-center gap-2 rounded-btn border border-[var(--border)] bg-[var(--surface)] px-4 py-2.5 text-sm font-medium text-[var(--fg-strong)] hover:bg-[var(--accent-soft)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/60"
-          >
-            {copied ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
-            {copied ? 'Copiado!' : 'Copiar Checklist'}
-          </button>
           <ShareButton country={country} />
         </div>
         <p className="text-xs text-[var(--muted)]">Última atualização: {country.lastUpdated}</p>

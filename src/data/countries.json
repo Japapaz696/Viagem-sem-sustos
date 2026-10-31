@@ -28,8 +28,14 @@
       ]
     },
     "maxStayDays": 0,
-    "officialUrl": "https://www.gov.br",
-    "lastUpdated": "2026-10-28"
+    "officialUrl": "https://www.gov.br/pf/pt-br/assuntos/passaporte/ajuda/duvidas_/inicio/mercosul",
+    "lastUpdated": "2026-10-28",
+    "sources": {
+      "visa": null,
+      "passport": "https://www.gov.br/pf/pt-br/assuntos/passaporte/ajuda/duvidas_/inicio/mercosul",
+      "stay": null,
+      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/brazil"
+    }
   },
   {
     "id": "us",
@@ -45,12 +51,12 @@
     "visa": {
       "type": "required",
       "label": "Visto necessário",
-      "description": "Brasileiros precisam de visto de turismo (B1/B2) ou visto eletrônico ESTA quando elegíveis.",
+      "description": "Para turismo, brasileiros precisam de visto B1/B2. ESTA não se aplica a viagens com passaporte brasileiro; o período autorizado de permanência é definido pela imigração na entrada.",
       "badgeColor": "bg-red-100 text-red-700"
     },
     "passport": {
-      "minValidityMonths": 6,
-      "details": "Passaporte válido por pelo menos 6 meses além da data de retorno."
+      "minValidityMonths": 0,
+      "details": "Para brasileiros, o passaporte deve estar válido durante o período pretendido de permanência; a regra geral de seis meses não se aplica ao Brasil."
     },
     "vaccines": {
       "required": [],
@@ -61,8 +67,14 @@
       ]
     },
     "maxStayDays": 180,
-    "officialUrl": "https://travel.state.gov",
-    "lastUpdated": "2026-10-28"
+    "officialUrl": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visitor.html",
+    "lastUpdated": "2026-10-30",
+    "sources": {
+      "visa": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visitor.html",
+      "passport": "https://travel.state.gov/content/dam/visas/PDF-other/Six%20Month%20Passport%20Validity%20Countries%203-16-2022.pdf",
+      "stay": "https://i94.cbp.dhs.gov/home",
+      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/united-states"
+    }
   },
   {
     "id": "pt",
@@ -82,7 +94,7 @@
     },
     "passport": {
       "minValidityMonths": 3,
-      "details": "Passaporte válido por pelo menos 3 meses após a data de saída do espaço Schengen."
+      "details": "Passaporte emitido há no máximo 10 anos e válido por pelo menos 3 meses após a data prevista de saída do espaço Schengen."
     },
     "vaccines": {
       "required": [],
@@ -92,8 +104,14 @@
       ]
     },
     "maxStayDays": 90,
-    "officialUrl": "https://vistos.mne.gov.pt",
-    "lastUpdated": "2026-10-28"
+    "officialUrl": "https://www.gov.pt/guias/entrar-e-sair-de-portugal",
+    "lastUpdated": "2026-10-30",
+    "sources": {
+      "visa": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex:02012A0921%2802%29-20221001",
+      "passport": "https://europa.eu/youreurope/citizens/travel/entry-exit/non-eu-nationals/index_en.htm",
+      "stay": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex:02012A0921%2802%29-20221001",
+      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/portugal"
+    }
   },
   {
     "id": "ar",
@@ -123,8 +141,14 @@
       ]
     },
     "maxStayDays": 90,
-    "officialUrl": "https://www.cancilleria.gob.ar",
-    "lastUpdated": "2026-10-28"
+    "officialUrl": "https://www.argentina.gob.ar/tema/extranjeros",
+    "lastUpdated": "2026-10-28",
+    "sources": {
+      "visa": "https://www.argentina.gob.ar/tema/extranjeros",
+      "passport": "https://www.argentina.gob.ar/migraciones/documentacion-para-ingresar-al-pais-como-turista",
+      "stay": "https://www.argentina.gob.ar/migraciones/documentacion-para-ingresar-al-pais-como-turista",
+      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/argentina"
+    }
   },
   {
     "id": "es",
@@ -145,7 +169,7 @@
     },
     "passport": {
       "minValidityMonths": 3,
-      "details": "Passaporte válido por pelo menos 3 meses após a data de saída do espaço Schengen."
+      "details": "Passaporte emitido há no máximo 10 anos e válido por pelo menos 3 meses após a data prevista de saída do espaço Schengen."
     },
     "vaccines": {
       "required": [],
@@ -155,8 +179,14 @@
       ]
     },
     "maxStayDays": 90,
-    "officialUrl": "https://www.exteriores.gob.es",
-    "lastUpdated": "2026-10-28"
+    "officialUrl": "https://www.exteriores.gob.es/Consulados/saopaulo/es/ServiciosConsulares/Documents/Requisitos%20de%20entrada%20para%20turistas.pdf",
+    "lastUpdated": "2026-10-30",
+    "sources": {
+      "visa": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex:02012A0921%2802%29-20221001",
+      "passport": "https://europa.eu/youreurope/citizens/travel/entry-exit/non-eu-nationals/index_en.htm",
+      "stay": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex:02012A0921%2802%29-20221001",
+      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/spain"
+    }
   },
   {
     "id": "jp",
@@ -172,12 +202,12 @@
     "visa": {
       "type": "exempt",
       "label": "Isento de visto",
-      "description": "Brasileiros isentos de visto de curta duração (até 90 dias) para turismo.",
+      "description": "Brasileiros têm isenção de visto por até 90 dias para curta duração, desde que usem passaporte eletrônico comum compatível com o padrão ICAO.",
       "badgeColor": "bg-green-100 text-green-700"
     },
     "passport": {
       "minValidityMonths": 0,
-      "details": "Passaporte válido durante toda a estadia."
+      "details": "A isenção para brasileiros exige passaporte eletrônico comum (ePassport) compatível com o padrão ICAO, válido durante toda a estadia."
     },
     "vaccines": {
       "required": [],
@@ -188,8 +218,14 @@
       ]
     },
     "maxStayDays": 90,
-    "officialUrl": "https://www.mofa.go.jp",
-    "lastUpdated": "2026-10-28"
+    "officialUrl": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html",
+    "lastUpdated": "2026-10-30",
+    "sources": {
+      "visa": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html",
+      "passport": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html",
+      "stay": "https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html",
+      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/japan"
+    }
   },
   {
     "id": "fr",
@@ -211,7 +247,7 @@
     },
     "passport": {
       "minValidityMonths": 3,
-      "details": "Passaporte válido por pelo menos 3 meses após a data de saída do espaço Schengen."
+      "details": "Passaporte emitido há no máximo 10 anos e válido por pelo menos 3 meses após a data prevista de saída do espaço Schengen."
     },
     "vaccines": {
       "required": [],
@@ -221,8 +257,14 @@
       ]
     },
     "maxStayDays": 90,
-    "officialUrl": "https://france-visas.gouv.fr",
-    "lastUpdated": "2026-10-28"
+    "officialUrl": "https://france-visas.gouv.fr/en/bresil",
+    "lastUpdated": "2026-10-30",
+    "sources": {
+      "visa": "https://france-visas.gouv.fr/en/bresil",
+      "passport": "https://europa.eu/youreurope/citizens/travel/entry-exit/non-eu-nationals/index_en.htm",
+      "stay": "https://france-visas.gouv.fr/en/bresil",
+      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/france"
+    }
   },
   {
     "id": "cl",
@@ -252,8 +294,14 @@
       ]
     },
     "maxStayDays": 90,
-    "officialUrl": "https://www.consuex.cl",
-    "lastUpdated": "2026-10-28"
+    "officialUrl": "https://www.consulado.gob.cl/informacion-sobre-visas-para-ingresar-a-chile",
+    "lastUpdated": "2026-10-28",
+    "sources": {
+      "visa": "https://www.consulado.gob.cl/informacion-sobre-visas-para-ingresar-a-chile",
+      "passport": "https://www.gov.br/pf/pt-br/assuntos/passaporte/ajuda/duvidas_/inicio/mercosul",
+      "stay": "https://www.consulado.gob.cl/informacion-sobre-visas-para-ingresar-a-chile",
+      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/chile"
+    }
   },
   {
     "id": "mx",
@@ -266,14 +314,14 @@
     ],
     "flag": "🇲🇽",
     "visa": {
-      "type": "exempt",
-      "label": "Isento de visto",
-      "description": "Brasileiros isentos de visto para turismo; preenchem FMM na chegada.",
-      "badgeColor": "bg-green-100 text-green-700"
+      "type": "evisa",
+      "label": "Autorização eletrônica necessária",
+      "description": "Brasileiros precisam de visto para turismo: há solicitação eletrônica para entrada por via aérea; para entrada terrestre ou marítima, consulte o consulado. A permanência autorizada pode chegar a 180 dias, mas é definida pela imigração.",
+      "badgeColor": "bg-amber-100 text-amber-800"
     },
     "passport": {
-      "minValidityMonths": 6,
-      "details": "Passaporte válido por pelo menos 6 meses."
+      "minValidityMonths": 0,
+      "details": "Passaporte válido durante toda a estadia; a orientação consular consultada não estabelece validade mínima geral de seis meses."
     },
     "vaccines": {
       "required": [],
@@ -284,8 +332,14 @@
       ]
     },
     "maxStayDays": 180,
-    "officialUrl": "https://www.gob.mx/sre",
-    "lastUpdated": "2026-10-28"
+    "officialUrl": "https://consulmex.sre.gob.mx/riodejaneiro/index.php/pt/visas",
+    "lastUpdated": "2026-10-30",
+    "sources": {
+      "visa": "https://consulmex.sre.gob.mx/riodejaneiro/index.php/pt/visas",
+      "passport": "https://consulmex.sre.gob.mx/delrio/index.php/servicios-para-extranjeros/visas/20-servicios-consulares/341-visas-en",
+      "stay": "https://consulmex.sre.gob.mx/riodejaneiro/index.php/pt/visas",
+      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/mexico"
+    }
   },
   {
     "id": "it",
@@ -307,7 +361,7 @@
     },
     "passport": {
       "minValidityMonths": 3,
-      "details": "Passaporte válido por pelo menos 3 meses após a data de saída do espaço Schengen."
+      "details": "Passaporte emitido há no máximo 10 anos e válido por pelo menos 3 meses após a data prevista de saída do espaço Schengen."
     },
     "vaccines": {
       "required": [],
@@ -317,8 +371,14 @@
       ]
     },
     "maxStayDays": 90,
-    "officialUrl": "https://vistoperitalia.esteri.it",
-    "lastUpdated": "2026-10-28"
+    "officialUrl": "https://conssanpaolo.esteri.it/pt/servizi-consolari-e-visti/servizi-per-il-cittadino-straniero/visti/",
+    "lastUpdated": "2026-10-30",
+    "sources": {
+      "visa": "https://conssanpaolo.esteri.it/pt/servizi-consolari-e-visti/servizi-per-il-cittadino-straniero/visti/",
+      "passport": "https://europa.eu/youreurope/citizens/travel/entry-exit/non-eu-nationals/index_en.htm",
+      "stay": "https://conssanpaolo.esteri.it/pt/servizi-consolari-e-visti/servizi-per-il-cittadino-straniero/visti/",
+      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/italy"
+    }
   },
   {
     "id": "th",
@@ -334,7 +394,7 @@
     "visa": {
       "type": "exempt",
       "label": "Isento de visto",
-      "description": "Brasileiros isentos de visto por até 90 dias para turismo.",
+      "description": "Brasileiros têm isenção de visto por até 90 dias pelo acordo bilateral. É necessário preencher o Thailand Digital Arrival Card (TDAC) antes da chegada.",
       "badgeColor": "bg-green-100 text-green-700"
     },
     "passport": {
@@ -351,8 +411,14 @@
       ]
     },
     "maxStayDays": 90,
-    "officialUrl": "https://www.thaiembassy.org",
-    "lastUpdated": "2026-10-28"
+    "officialUrl": "https://brasilia.thaiembassy.org/en/content/summary-the-revision-of-thailand-s-visa-exemption",
+    "lastUpdated": "2026-10-30",
+    "sources": {
+      "visa": "https://brasilia.thaiembassy.org/en/content/summary-the-revision-of-thailand-s-visa-exemption",
+      "passport": "https://canberra.thaiembassy.org/en/page/entry-to-thailand",
+      "stay": "https://brasilia.thaiembassy.org/th/content/thailand-digital-arrival-card-tdac?menu=670e09bcb847bc1ded0c0383&page=670e233f6b960d2dd52ef8a3",
+      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/thailand"
+    }
   },
   {
     "id": "ca",
@@ -382,26 +448,35 @@
       ]
     },
     "maxStayDays": 180,
-    "officialUrl": "https://www.canada.ca/en/immigration-refugees-citizenship.html",
-    "lastUpdated": "2026-10-28"
+    "officialUrl": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html",
+    "lastUpdated": "2026-10-28",
+    "sources": {
+      "visa": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/entry-requirements-country.html",
+      "passport": "https://www.canada.ca/en/immigration-refugees-citizenship/services/passport-travel-document.html",
+      "stay": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/prepare-arrival.html",
+      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/canada"
+    }
   },
   {
     "id": "gb",
-    "slug": "inglaterra",
-    "name": "Inglaterra",
+    "slug": "reino-unido",
+    "name": "Reino Unido",
     "keywords": [
-      "inglaterra",
       "reino unido",
+      "inglaterra",
       "uk",
       "londres",
+      "escocia",
+      "pais de gales",
+      "irlanda do norte",
       "europa"
     ],
     "flag": "🇬🇧",
     "visa": {
-      "type": "required",
-      "label": "Visto necessário",
-      "description": "Brasileiros precisam de visto de visitante (Standard Visitor visa) para o Reino Unido.",
-      "badgeColor": "bg-red-100 text-red-700"
+      "type": "evisa",
+      "label": "ETA necessária (sem visto de visitante)",
+      "description": "Brasileiros precisam obter uma autorização eletrônica ETA antes da viagem para visitas de até 6 meses; para outras finalidades ou estadias, podem ser necessários outros vistos.",
+      "badgeColor": "bg-amber-100 text-amber-800"
     },
     "passport": {
       "minValidityMonths": 0,
@@ -415,8 +490,14 @@
       ]
     },
     "maxStayDays": 180,
-    "officialUrl": "https://www.gov.uk/standard-visitor-visa",
-    "lastUpdated": "2026-10-28"
+    "officialUrl": "https://www.gov.uk/guidance/immigration-rules-appendix-eta-national-list",
+    "lastUpdated": "2026-10-30",
+    "sources": {
+      "visa": "https://www.gov.uk/guidance/immigration-rules-appendix-eta-national-list",
+      "passport": "https://www.gov.uk/uk-border-control/before-you-leave-for-the-uk",
+      "stay": "https://www.gov.uk/standard-visitor",
+      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/united-kingdom"
+    }
   },
   {
     "id": "co",
@@ -432,7 +513,7 @@
     "visa": {
       "type": "exempt",
       "label": "Isento de visto",
-      "description": "Brasileiros isentos de visto por até 90 dias, prorrogáveis.",
+      "description": "Brasileiros podem permanecer inicialmente por até 90 dias sem visto; a permanência pode ser prorrogada, respeitado o limite total aplicável de até 180 dias no ano.",
       "badgeColor": "bg-green-100 text-green-700"
     },
     "passport": {
@@ -440,18 +521,23 @@
       "details": "Pode entrar com RG válido; passaporte não é obrigatório."
     },
     "vaccines": {
-      "required": [
-        "Febre amarela (algumas regiões)"
-      ],
+      "required": [],
       "recommended": [
+        "Febre amarela (recomendada para áreas de risco; regras locais podem exigir comprovante)",
         "Hepatite A",
         "Febre tifoide",
         "COVID-19"
       ]
     },
-    "maxStayDays": 90,
-    "officialUrl": "https://www.cancilleria.gov.co",
-    "lastUpdated": "2026-10-28"
+    "maxStayDays": 180,
+    "officialUrl": "https://cancilleria.gov.co/sites/default/files/Normograma/docs/resolucion_minrelaciones_5488_2022.htm",
+    "lastUpdated": "2026-10-30",
+    "sources": {
+      "visa": "https://cancilleria.gov.co/sites/default/files/Normograma/docs/resolucion_minrelaciones_5488_2022.htm",
+      "passport": "https://www.gov.br/pf/pt-br/assuntos/passaporte/ajuda/duvidas_/inicio/mercosul",
+      "stay": "https://www.migracioncolombia.gov.co/tramites-y-servicios/tramites-generales/prorroga/permiso-temporal-de-permanencia-ptp-/-prorroga",
+      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/colombia"
+    }
   },
   {
     "id": "de",
@@ -473,7 +559,7 @@
     },
     "passport": {
       "minValidityMonths": 3,
-      "details": "Passaporte válido por pelo menos 3 meses após a data de saída do espaço Schengen."
+      "details": "Passaporte emitido há no máximo 10 anos e válido por pelo menos 3 meses após a data prevista de saída do espaço Schengen."
     },
     "vaccines": {
       "required": [],
@@ -483,8 +569,14 @@
       ]
     },
     "maxStayDays": 90,
-    "officialUrl": "https://www.auswaertiges-amt.de",
-    "lastUpdated": "2026-10-28"
+    "officialUrl": "https://www.auswaertiges-amt.de/en/visa-service/231148-231148",
+    "lastUpdated": "2026-10-30",
+    "sources": {
+      "visa": "https://www.auswaertiges-amt.de/en/visa-service/231148-231148",
+      "passport": "https://europa.eu/youreurope/citizens/travel/entry-exit/non-eu-nationals/index_en.htm",
+      "stay": "https://www.auswaertiges-amt.de/en/visa-service/231148-231148",
+      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/germany"
+    }
   },
   {
     "id": "uy",
@@ -514,7 +606,13 @@
       ]
     },
     "maxStayDays": 90,
-    "officialUrl": "https://www.gub.uy/ministerio-relaciones-exteriores",
-    "lastUpdated": "2026-10-28"
+    "officialUrl": "https://www.gub.uy/ministerio-interior/comunicacion/publicaciones/regimen-visas-admision",
+    "lastUpdated": "2026-10-28",
+    "sources": {
+      "visa": "https://www.gub.uy/ministerio-interior/comunicacion/publicaciones/regimen-visas-admision",
+      "passport": "https://www.gov.br/pf/pt-br/assuntos/passaporte/ajuda/duvidas_/inicio/mercosul",
+      "stay": "https://www.gov.br/mre/pt-br/consulado-montevideu/turismo-no-uruguai/cuidados-e-problemas-mais-frequentes",
+      "vaccines": "https://wwwnc.cdc.gov/travel/destinations/traveler/none/uruguay"
+    }
   }
 ]

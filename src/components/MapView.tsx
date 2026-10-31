@@ -49,14 +49,18 @@ export default function MapView({ countries, selected, region, onSelect }: {
   const dragOrigin = useRef<{ x: number; y: number; rotation: [number, number] } | null>(null);
 
   useEffect(() => {
+    // Region changes recenter the globe while preserving direct drag interaction.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setRotation(REGION_ROTATIONS[region] ?? REGION_ROTATIONS.all);
   }, [region]);
 
   useEffect(() => {
     if (!selected) return;
     const coordinates = COORDS[selected.id];
+    // Selecting a country recenters the interactive projection on its marker.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (coordinates) setRotation([wrapAngle(-coordinates[0]), wrapAngle(-coordinates[1])]);
-  }, [selected?.id]);
+  }, [selected]);
 
   const projection = useMemo(() => geoOrthographic()
     .translate([500, 250])

@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { MapPinned, Search, SlidersHorizontal, X, CheckCircle2, Zap, AlertCircle } from 'lucide-react';
+import Image from 'next/image';
 import countriesData from '@/data/countries.json';
 import type { Country } from '@/types/country';
 import { getDestinationImage } from '@/utils/images';
@@ -34,11 +35,11 @@ const VISA_SUMMARY = [
   },
   {
     id: 'evisa',
-    label: 'E-Visa ou na chegada',
+    label: 'Autorização eletrônica',
     color: 'bg-amber-300',
     icon: Zap,
     // Autorização eletrônica ou na chegada
-    description: 'Autorização eletrônica ou na chegada',
+    description: 'E-Visa, ETA ou autorização eletrônica na chegada',
   },
   {
     id: 'required',
@@ -127,7 +128,7 @@ export default function DestinationsExplorer({ selected, onSelect, onClear }: {
             <select id="visa-filter" value={visaType} onChange={(event) => setVisaType(event.target.value)} className="h-full min-h-12 min-w-0 flex-1 bg-transparent text-sm text-[var(--fg-strong)] outline-none">
               <option value="all">Qualquer requisito</option>
               <option value="exempt">Sem visto</option>
-              <option value="evisa" disabled={!hasElectronicVisaData}>E-Visa / na chegada</option>
+              <option value="evisa" disabled={!hasElectronicVisaData}>Autorização eletrônica / na chegada</option>
               <option value="required">Visto necessário</option>
             </select>
           </label>
@@ -210,7 +211,7 @@ export default function DestinationsExplorer({ selected, onSelect, onClear }: {
               <div className="max-h-[610px] overflow-y-auto p-2">
                 {filtered.map((country) => (
                   <button key={country.id} type="button" onClick={() => onSelect(country)} className="flex w-full items-center gap-3 rounded-lg p-2 text-left transition-colors hover:bg-[var(--surface-muted)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">
-                    <img src={getDestinationImage(country.id)} alt="" className="h-12 w-14 shrink-0 rounded-md object-cover" loading="lazy" />
+                    <Image src={getDestinationImage(country.id)} alt="" width={112} height={96} sizes="56px" className="h-12 w-14 shrink-0 rounded-md object-cover" loading="lazy" />
                     <span className="min-w-0 flex-1">
                       <span className="flex items-center gap-2 truncate text-sm font-semibold text-[var(--fg-strong)]"><span aria-hidden="true">{country.flag}</span>{country.name}</span>
                       <span className="mt-1 block truncate text-xs text-[var(--muted)]">{country.visa.label}</span>
@@ -229,7 +230,7 @@ export default function DestinationsExplorer({ selected, onSelect, onClear }: {
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           {filtered.map((country) => (
             <button key={country.id} type="button" onClick={() => onSelect(country)} className="flex items-center gap-3 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-2.5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">
-              <img src={getDestinationImage(country.id)} alt="" className="h-14 w-16 shrink-0 rounded-md object-cover" loading="lazy" />
+              <Image src={getDestinationImage(country.id)} alt="" width={128} height={112} sizes="64px" className="h-14 w-16 shrink-0 rounded-md object-cover" loading="lazy" />
               <span className="min-w-0 flex-1">
                 <span className="flex items-center gap-2 truncate text-sm font-semibold text-[var(--fg-strong)]"><span aria-hidden="true">{country.flag}</span>{country.name}</span>
                 <span className="mt-1 block truncate text-xs text-[var(--muted)]">{country.visa.label}</span>

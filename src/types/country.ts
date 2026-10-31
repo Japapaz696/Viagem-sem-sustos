@@ -20,5 +20,11 @@ export interface Country {
   };
   maxStayDays: number;
   officialUrl: string;
+  sources: {
+    visa: string | null;
+    passport: string | null;
+    stay: string | null;
+    vaccines: string | null;
+  };
   lastUpdated: string;
 }

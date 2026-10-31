@@ -33,7 +33,7 @@ export default function DatePicker({
     if (referenceType === 'return' && !returnDate) return false;
     if (referenceType === 'travel' && !travelDate) return false;
     return true;
-  }, [minValidityMonths, referenceType, travelDate, returnDate, unclearReference, invalidDateRange]);
+  }, [referenceType, travelDate, returnDate, unclearReference, invalidDateRange]);
 
   const result = useMemo(() => {
     if (!passportExpiry || !canVerify) return null;

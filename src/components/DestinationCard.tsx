@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { Bookmark, BookmarkCheck } from 'lucide-react';
 import StatusBadge from './StatusBadge';
 import { getDestinationImage } from '@/utils/images';
@@ -18,20 +18,11 @@ export default function DestinationCard({
   saved?: boolean;
   onToggleSave?: (id: string) => void;
 }) {
-  const [imgSrc, setImgSrc] = useState(getDestinationImage(country.id));
-  const [imgError, setImgError] = useState(false);
-
-  function handleImgError() {
-    if (!imgError) {
-      setImgError(true);
-      setImgSrc(`/imagens/Destinos/images-destinos/${country.id}.jpg`);
-    }
-  }
-
   return (
     <motion.article
       layout
-      initial={{ opacity: 0, y: 12 }}
+      // Keep server-rendered cards visible before Framer Motion hydrates.
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.2, ease: 'easeOut' }}
@@ -45,12 +36,13 @@ export default function DestinationCard({
         aria-label={`Ver detalhes de ${country.name}`}
       >
         <div className="relative aspect-[4/3] overflow-hidden">
-          <img
-            src={imgSrc}
+          <Image
+            src={getDestinationImage(country.id)}
             alt={`Foto de destinos para ${country.name}`}
+            fill
+            sizes="(max-width: 639px) 50vw, (max-width: 1023px) 50vw, 320px"
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-            loading="eager"
-            onError={handleImgError}
+            loading="lazy"
           />
           <div className="absolute top-3 left-3 z-10">
             <StatusBadge type={country.visa.type} label={country.visa.label} />

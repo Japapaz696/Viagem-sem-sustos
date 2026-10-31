@@ -1,4 +1,5 @@
 import type { Country } from '@/types/country';
+import { getPassportRule } from '@/utils/passportRules';
 
 export function generateShareText(country: Country): string {
   const vaccines =
@@ -8,38 +9,32 @@ export function generateShareText(country: Country): string {
       ? `Recomendadas: ${country.vaccines.recommended.join(', ')}`
       : 'Nenhuma obrigatória';
 
+  const passportRule = getPassportRule(
+    country.id,
+    country.passport.minValidityMonths,
+    country.passport.details,
+  );
+  const passport = passportRule === 'origin'
+    ? 'Não se aplica (país de origem)'
+    : country.passport.minValidityMonths > 0
+      ? `${country.passport.minValidityMonths} meses de validade mínima. ${country.passport.details}`
+      : country.passport.details || 'Consulte a fonte oficial';
+  const stay = country.id === 'br'
+    ? 'Não se aplica (país de origem)'
+    : country.maxStayDays > 0
+      ? `${country.maxStayDays} dias`
+      : 'Não informado nos dados cadastrados';
+
   return [
     `✈️ Requisitos de viagem para ${country.name} ${country.flag}:`,
     `🛂 Visto: ${country.visa.label}`,
-    `📖 Passaporte: ${country.passport.minValidityMonths} meses de validade mínima`,
+    `📖 Passaporte: ${passport}`,
     `💉 Vacinas: ${vaccines}`,
-    `⏱️ Permanência: ${country.maxStayDays} dias`,
+    `⏱️ Permanência: ${stay}`,
+    `🔎 Fonte principal: ${country.officialUrl}`,
+    `📅 Dados revisados em: ${country.lastUpdated}`,
     '',
     'Confira no ViagemSemSusto!',
   ].join('\n');
 }
 
-export function buildShareText(countryName: string, visaLabel: string, maxStayDays: number): string {
-  return `Viagem sem Susto — ${countryName}\nVisto: ${visaLabel}\nEstadia máxima: ${maxStayDays} dias\nPlaneje sua viagem com segurança.`;
-}
-
-export async function shareCountry(countryName: string, visaLabel: string, maxStayDays: number): Promise<boolean> {
-  const text = buildShareText(countryName, visaLabel, maxStayDays);
-  if (typeof navigator !== 'undefined' && navigator.share) {
-    try {
-      await navigator.share({ title: `Viagem sem Susto — ${countryName}`, text });
-      return true;
-    } catch {
-      return false;
-    }
-  }
-  if (typeof navigator !== 'undefined' && navigator.clipboard) {
-    try {
-      await navigator.clipboard.writeText(text);
-      return true;
-    } catch {
-      return false;
-    }
-  }
-  return false;
-}

@@ -1,16 +1,13 @@
 'use client';
 
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { Bookmark, Calendar, ClipboardList, Compass, GitCompare, Map, MoreHorizontal, Settings, X } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { Bookmark, Compass, Map, Settings, X } from 'lucide-react';
+import { useEffect } from 'react';
 import BrandLogo from './BrandLogo';
 
 const desktopItems = [
   { id: 'explore', label: 'Explorar', icon: Compass },
   { id: 'destinations', label: 'Destinos', icon: Map },
-  { id: 'planejar', label: 'Planejar viagem', icon: Calendar },
-  { id: 'checklist', label: 'Checklist', icon: ClipboardList },
-  { id: 'comparar', label: 'Comparar destinos', icon: GitCompare },
   { id: 'saved', label: 'Salvos', icon: Bookmark },
   { id: 'settings', label: 'Ajustes', icon: Settings },
 ];
@@ -18,15 +15,9 @@ const desktopItems = [
 const mobileVisibleItems = [
   { id: 'explore', label: 'Explorar', icon: Compass },
   { id: 'destinations', label: 'Destinos', icon: Map },
-  { id: 'planejar', label: 'Planejar', icon: Calendar },
   { id: 'saved', label: 'Salvos', icon: Bookmark },
   { id: 'settings', label: 'Ajustes', icon: Settings },
 ];
-const mobileMoreItems = [
-  { id: 'checklist', label: 'Checklist', icon: ClipboardList },
-  { id: 'comparar', label: 'Comparar', icon: GitCompare },
-];
-
 export function MenuToggle({ open, onClick, inverse = false }: { open: boolean; onClick: () => void; inverse?: boolean }) {
   const reduceMotion = useReducedMotion();
   const transition = reduceMotion ? { duration: 0 } : { duration: 0.2, ease: 'easeInOut' as const };
@@ -55,7 +46,6 @@ export default function Navbar({ active, onChange, open, onClose }: {
   open: boolean;
   onClose: () => void;
 }) {
-  const [moreOpen, setMoreOpen] = useState(false);
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
@@ -101,7 +91,7 @@ export default function Navbar({ active, onChange, open, onClose }: {
                       <li key={item.id}>
                         <button
                           type="button"
-                          onClick={() => { onChange(item.id); onClose(); setMoreOpen(false); }}
+                          onClick={() => { onChange(item.id); onClose(); }}
                           aria-current={isActive ? 'page' : undefined}
                           className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] ${isActive ? 'bg-[var(--accent-soft)] text-[var(--accent)]' : 'text-[var(--fg)] hover:bg-[var(--surface-muted)]'}`}
                         >
@@ -126,35 +116,15 @@ export default function Navbar({ active, onChange, open, onClose }: {
             const isActive = item.id === active;
             return (
               <li key={item.id}>
-                <button type="button" onClick={() => { onChange(item.id); setMoreOpen(false); }} aria-current={isActive ? 'page' : undefined}
+                <button type="button" onClick={() => onChange(item.id)} aria-current={isActive ? 'page' : undefined}
                   className={`flex flex-col items-center gap-0.5 rounded-lg px-2 py-1 text-[10px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] ${isActive ? 'text-[var(--accent)]' : 'text-[var(--muted)]'}`}>
                   <Icon className="h-5 w-5" aria-hidden="true" /><span>{item.label}</span>
                 </button>
               </li>
             );
           })}
-          <li>
-            <button type="button" onClick={() => setMoreOpen(!moreOpen)} aria-expanded={moreOpen} aria-label="Mais opções"
-              className={`flex flex-col items-center gap-0.5 rounded-lg px-2 py-1 text-[10px] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] ${mobileMoreItems.some(item => item.id === active) ? 'text-[var(--accent)]' : 'text-[var(--muted)]'}`}>
-              <MoreHorizontal className="h-5 w-5" aria-hidden="true" /><span>Mais</span>
-            </button>
-          </li>
         </ul>
       </nav>
-
-      <AnimatePresence>
-        {moreOpen && (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}
-            transition={{ duration: reduceMotion ? 0 : 0.16 }} className="fixed bottom-16 left-2 right-2 z-50 rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-lg md:hidden">
-            <ul className="space-y-1 p-2">
-              {mobileMoreItems.map((item) => {
-                const Icon = item.icon;
-                return <li key={item.id}><button type="button" onClick={() => { onChange(item.id); setMoreOpen(false); }} className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-[var(--fg)] hover:bg-[var(--surface-muted)]"><Icon className="h-4 w-4" aria-hidden="true" />{item.label}</button></li>;
-              })}
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </>
   );
 }

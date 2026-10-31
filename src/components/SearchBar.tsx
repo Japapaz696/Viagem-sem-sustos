@@ -22,6 +22,7 @@ export default function SearchBar({
 }) {
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -57,21 +58,38 @@ export default function SearchBar({
             type="search"
             value={query}
             onKeyDown={(event) => {
-              if (event.key === 'Enter' && variant === 'hero') {
+              if (event.key === 'ArrowDown' && results.length > 0) {
+                event.preventDefault();
+                setOpen(true);
+                setActiveIndex((current) => (current + 1) % results.length);
+              } else if (event.key === 'ArrowUp' && results.length > 0) {
+                event.preventDefault();
+                setOpen(true);
+                setActiveIndex((current) => (current <= 0 ? results.length - 1 : current - 1));
+              } else if (event.key === 'Enter' && open && activeIndex >= 0 && results[activeIndex]) {
+                event.preventDefault();
+                onSelectCountry(results[activeIndex]);
+                setQuery('');
+                setOpen(false);
+                setActiveIndex(-1);
+              } else if (event.key === 'Enter' && variant === 'hero') {
                 event.preventDefault();
                 onSearch?.(query);
                 setOpen(false);
               }
             }}
-            onChange={(e) => { setQuery(e.target.value); onQueryChange?.(e.target.value); setOpen(true); }}
+            onChange={(e) => { setQuery(e.target.value); onQueryChange?.(e.target.value); setOpen(true); setActiveIndex(-1); }}
             onFocus={() => setOpen(true)}
             onBlur={() => setTimeout(() => setOpen(false), 200)}
             placeholder={variant === 'hero' ? 'Para onde você quer viajar?' : 'Pesquise destinos...'}
             className={`w-full bg-transparent font-medium outline-none ${variant === 'hero' ? 'min-w-0 py-3 text-base text-slate-900 placeholder:text-slate-500 sm:text-lg' : 'text-sm text-[var(--fg-strong)] placeholder:text-[var(--muted-soft)]'}`}
             aria-label="Buscar destino"
+            role="combobox"
             aria-autocomplete="list"
+            aria-haspopup="listbox"
             aria-expanded={open && results.length > 0}
             aria-controls={`${id}-results`}
+            aria-activedescendant={open && activeIndex >= 0 ? `${id}-option-${results[activeIndex]?.id}` : undefined}
           />
           {variant === 'default' && <kbd className="hidden h-7 select-none items-center rounded-lg border border-[var(--border)] bg-[var(--surface)] px-2 text-[10px] font-medium text-[var(--muted-soft)] md:inline-flex">⌘ K</kbd>}
           {query && (
@@ -98,12 +116,14 @@ export default function SearchBar({
               {results.length === 0 && (
                 <li className="px-5 py-4 text-sm text-[#64748B] text-center">Nenhum destino encontrado.</li>
               )}
-              {results.map((c) => (
+              {results.map((c, index) => (
                 <li key={c.id} role="presentation">
                   <button
+                    id={`${id}-option-${c.id}`}
                     type="button"
                     onMouseDown={() => { onSelectCountry(c); setQuery(''); setOpen(false); }}
                     role="option"
+                    aria-selected={activeIndex === index}
                     className="flex w-full items-center gap-3 px-5 py-3 text-left hover:bg-[var(--accent-soft)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40"
                   >
                     <span className="text-xl leading-none" aria-hidden="true">{c.flag}</span>

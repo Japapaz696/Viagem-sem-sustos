@@ -4,7 +4,6 @@ import { createContext, useContext, useEffect, useState } from 'react';
 
 interface ThemeContextValue {
   resolvedMode: 'light' | 'dark';
-  mounted: boolean;
 }
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
@@ -16,19 +15,18 @@ function getTimeMode(): 'light' | 'dark' {
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [resolvedMode, setResolvedMode] = useState<'light' | 'dark'>('light');
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
     const updateTheme = () => {
       clearTimeout(timer);
       const nextMode = getTimeMode();
+      // The client clock is only available after hydration and is the app's requested theme source.
       setResolvedMode(nextMode);
       document.documentElement.classList.toggle('dark', nextMode === 'dark');
       timer = setTimeout(updateTheme, 60_000);
     };
     updateTheme();
-    setMounted(true);
 
     const onVisibilityChange = () => {
       if (document.visibilityState === 'visible') updateTheme();
@@ -41,7 +39,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <ThemeContext.Provider value={{ resolvedMode, mounted }}>
+    <ThemeContext.Provider value={{ resolvedMode }}>
       <script
         dangerouslySetInnerHTML={{
           __html: "(function(){var h=new Date().getHours();document.documentElement.classList.toggle('dark',h<6||h>=18)})();",

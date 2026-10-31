@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
 import countriesData from '@/data/countries.json';
 import type { Country } from '@/types/country';
 import SearchBar from '@/components/SearchBar';
@@ -16,6 +16,7 @@ import HeroFlightAnimation from '@/components/HeroFlightAnimation';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import BrandLogo from '@/components/BrandLogo';
 import { MenuToggle } from '@/components/Navbar';
+import { useSupabase } from '@/contexts/SupabaseContext';
 
 const countries = countriesData as Country[];
 const SOUTH_AMERICA = new Set(['ar', 'cl', 'co', 'uy', 'br']);
@@ -33,32 +34,97 @@ function applyFilter(list: Country[], filter: string): Country[] {
 
 const SAVED_KEY = 'viagem-sem-susto-saved';
 
+function savedStorageKey(userId: string | null) {
+  return userId ? `${SAVED_KEY}:user:${userId}` : SAVED_KEY;
+}
+
 export default function Home() {
   const reduceMotion = useReducedMotion();
+  const { client, user, ready: authReady } = useSupabase();
   const [selected, setSelected] = useState<Country | null>(null);
   const [sideOpen, setSideOpen] = useState(false);
   const [filter, setFilter] = useState('all');
   const [activeTab, setActiveTab] = useState('explore');
   const [query, setQuery] = useState('');
   const [saved, setSaved] = useState<Set<string>>(new Set());
+  const [loadedSavedScope, setLoadedSavedScope] = useState<string | null>(null);
+  const [syncMessage, setSyncMessage] = useState('');
   const [navOpen, setNavOpen] = useState(false);
+  const savedRef = useRef(saved);
+  const savedScope = user?.id ?? 'guest';
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(SAVED_KEY);
-      if (raw) {
-        // localStorage is browser-only; load it after hydration to avoid mismatching the server HTML.
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setSaved(new Set(JSON.parse(raw)));
-      }
-    } catch { /* ignore */ }
-  }, []);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem(SAVED_KEY, JSON.stringify(Array.from(saved)));
-    } catch { /* ignore */ }
+    savedRef.current = saved;
   }, [saved]);
+
+  useEffect(() => {
+    if (!authReady) return;
+    try {
+      const raw = localStorage.getItem(savedStorageKey(user?.id ?? null));
+      const values = raw ? JSON.parse(raw) : [];
+      // Browser storage is loaded after hydration, so update React from this external source.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setSaved(new Set(Array.isArray(values) ? values.filter((id): id is string => typeof id === 'string') : []));
+    } catch {
+      setSaved(new Set());
+    }
+    setLoadedSavedScope(savedScope);
+  }, [authReady, savedScope, user?.id]);
+
+  useEffect(() => {
+    if (loadedSavedScope !== savedScope) return;
+    try {
+      localStorage.setItem(savedStorageKey(user?.id ?? null), JSON.stringify(Array.from(saved)));
+    } catch { /* ignore */ }
+  }, [saved, loadedSavedScope, savedScope, user?.id]);
+
+  useEffect(() => {
+    if (!client || !user || !authReady || loadedSavedScope !== savedScope) return;
+    const supabaseClient = client;
+    const currentUser = user;
+    let cancelled = false;
+
+    async function syncSavedDestinations() {
+      setSyncMessage('Sincronizando destinos salvos…');
+      const { data, error } = await supabaseClient
+        .from('saved_destinations')
+        .select('country_id');
+      if (error) throw error;
+
+      const validIds = new Set(countries.map((country) => country.id));
+      const remoteIds = new Set((data ?? []).map((row) => row.country_id).filter((id): id is string => typeof id === 'string' && validIds.has(id)));
+      let guestIds: string[] = [];
+      try {
+        const rawGuest = localStorage.getItem(SAVED_KEY);
+        const parsedGuest: unknown = rawGuest ? JSON.parse(rawGuest) : [];
+        if (Array.isArray(parsedGuest)) guestIds = parsedGuest.filter((id): id is string => typeof id === 'string' && validIds.has(id));
+      } catch { /* Ignore damaged local data and keep valid remote records. */ }
+
+      const mergedIds = new Set([...savedRef.current, ...guestIds, ...remoteIds]);
+      const newRows = [...mergedIds].filter((countryId) => !remoteIds.has(countryId)).map((country_id) => ({
+        user_id: currentUser.id,
+        country_id,
+      }));
+      if (newRows.length) {
+        const { error: saveError } = await supabaseClient.from('saved_destinations').upsert(newRows, {
+          onConflict: 'user_id,country_id',
+          ignoreDuplicates: true,
+        });
+        if (saveError) throw saveError;
+      }
+
+      if (!cancelled) {
+        setSaved(mergedIds);
+        setSyncMessage('Destinos salvos sincronizados com sua conta.');
+      }
+    }
+
+    void syncSavedDestinations().catch(() => {
+      if (!cancelled) setSyncMessage('Não foi possível sincronizar agora. Seus destinos continuam salvos neste dispositivo.');
+    });
+
+    return () => { cancelled = true; };
+  }, [client, user, authReady, loadedSavedScope, savedScope]);
 
   const filtered = useMemo(() => {
     let list = applyFilter(countries, filter);
@@ -108,12 +174,39 @@ export default function Home() {
   }
 
   function toggleSave(id: string) {
+    const removing = saved.has(id);
     setSaved((prev) => {
       const next = new Set(prev);
       if (next.has(id)) next.delete(id);
       else next.add(id);
       return next;
     });
+
+    if (!client || !user || loadedSavedScope !== savedScope) return;
+    setSyncMessage('Atualizando sua lista sincronizada…');
+    const request = removing
+      ? client.from('saved_destinations').delete().eq('user_id', user.id).eq('country_id', id)
+      : client.from('saved_destinations').upsert({ user_id: user.id, country_id: id }, {
+        onConflict: 'user_id,country_id',
+        ignoreDuplicates: true,
+      });
+    void Promise.resolve(request).then(({ error }) => {
+      setSyncMessage(error
+        ? 'Não foi possível sincronizar a última alteração; ela permanece neste dispositivo.'
+        : 'Lista sincronizada com sua conta.');
+    }).catch(() => {
+      setSyncMessage('Não foi possível sincronizar a última alteração; ela permanece neste dispositivo.');
+    });
+  }
+
+  async function clearSaved() {
+    if (client && user) {
+      const { error } = await client.from('saved_destinations').delete().eq('user_id', user.id);
+      if (error) throw error;
+    }
+    localStorage.removeItem(savedStorageKey(user?.id ?? null));
+    setSaved(new Set());
+    setSyncMessage(user ? 'Destinos removidos da nuvem.' : 'Lista local apagada.');
   }
 
   function closeSide() {
@@ -243,7 +336,7 @@ export default function Home() {
 
           {/* Settings Tab */}
           {activeTab === 'settings' && (
-            <SettingsPanel onClearSaved={() => setSaved(new Set())} savedCount={saved.size} />
+            <SettingsPanel onClearSaved={clearSaved} savedCount={saved.size} syncMessage={syncMessage} />
           )}
 
         </div>

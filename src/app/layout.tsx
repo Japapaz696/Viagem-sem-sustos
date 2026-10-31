@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { DM_Sans, Manrope } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/contexts/ThemeContext';
+import { SupabaseProvider } from '@/contexts/SupabaseContext';
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
@@ -34,7 +35,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR" suppressHydrationWarning className={`${dmSans.variable} ${manrope.variable}`}>
       <body className="font-sans">
-        <ThemeProvider>{children}</ThemeProvider>
+        <SupabaseProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </SupabaseProvider>
       </body>
     </html>
   );
